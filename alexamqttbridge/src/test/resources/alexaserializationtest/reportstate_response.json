@@ -1,0 +1,30 @@
+{
+    "context": {
+        "properties": [
+            {
+                "namespace": "Alexa.PowerController",
+                "name": "powerState",
+                "value": "OFF",
+                "timeOfSample": "2021-02-01T23:36:10.23Z",
+                "uncertaintyInMilliseconds": 50
+            }
+        ]
+    },
+    "event": {
+        "header": {
+            "namespace": "Alexa",
+            "name": "StateReport",
+            "payloadVersion": "3",
+            "messageId": "MeSsAgEiD",
+            "correlationToken": "ToKeN1"
+        },
+        "endpoint": {
+            "scope": {
+                "type": "BearerToken",
+                "token": "ToKeN2"
+            },
+            "endpointId": "demo_id"
+        },
+        "payload": {}
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "devices": [
+        {
+            "endpointId": "_endpoint_id",
+			"rules": [
+				{
+					"alexa": {
+						"interface": "_interface",
+                        "propertyName": "_propertyName"
+					},
+					"mqtt": {
+						"state": "_state"
+					},
+					"valueMapsToAlexa": [
+						{ "type": "value", "mqtt": "_mqtt", "alexa": "_alexa" }
+					]
+				}
+			]
+            
+        }
+    ]
+}

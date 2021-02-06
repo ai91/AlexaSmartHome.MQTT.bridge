@@ -1,0 +1,60 @@
+{
+	"devices": [
+		{
+			"endpointId": "demo_id",
+			"manufacturerName": "Smart Device Company",
+			"friendlyName": "Bedroom Outlet",
+			"description": "Smart Device Switch",
+			"displayCategories": [
+				"SWITCH"
+			],
+			"cookie": {
+				"key1": "arbitrary key/value pairs for skill to reference this endpoint.",
+				"key2": "There can be multiple entries",
+				"key3": "but they should only be used for reference purposes.",
+				"key4": "This is not a suitable place to maintain current endpoint state."
+			},
+			"capabilities": [
+				{
+					"type": "AlexaInterface",
+					"interface": "Alexa",
+					"version": "3"
+				},
+				{
+					"interface": "Alexa.PowerController",
+					"version": "3",
+					"type": "AlexaInterface",
+					"properties": {
+						"supported": [
+							{
+								"name": "powerState"
+							}
+						],
+						"retrievable": true
+					}
+				}
+			],
+			
+			"rules": [
+				{
+					"alexa": {
+						"interface": "Alexa.PowerController",
+                        "propertyName": "powerState"
+					},
+					"mqtt": {
+						"commands": "house/outlet/bedroom/command",
+						"state": "house/outlet/bedroom/state"
+					},
+					"valueMapsToAlexa": [
+						{ "type": "value", "mqtt": "1", "alexa": "ON" },
+						{ "type": "value", "mqtt": "0", "alexa": "OFF" }
+					],
+					"valueMapsToMqtt": [
+						{ "type": "value", "mqtt": "1", "alexa": "TurnOn" },
+						{ "type": "value", "mqtt": "0", "alexa": "TurnOff" }
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,25 @@
+{
+    "directive": {
+        "header": {
+            "namespace": "Alexa",
+            "name": "ReportState",
+            "payloadVersion": "3",
+            "messageId": "MeSsAgEiD",
+            "correlationToken": "ToKeN1"
+        },
+        "endpoint": {
+            "scope": {
+                "type": "BearerToken",
+                "token": "ToKeN2"
+            },
+            "endpointId": "demo_id",
+            "cookie": {
+                "key1": "arbitrary key/value pairs for skill to reference this endpoint.",
+                "key2": "There can be multiple entries",
+                "key3": "but they should only be used for reference purposes.",
+                "key4": "This is not a suitable place to maintain current endpoint state."
+            }
+        },
+        "payload": {}
+    }
+}

@@ -1,0 +1,49 @@
+{
+	"event": {
+		"header": {
+			"namespace": "Alexa.Discovery",
+			"name": "Discover.Response",
+			"payloadVersion": "3",
+			"messageId": "MeSsAgEiD"
+		},
+		"payload": {
+			"endpoints": [
+				{
+					"endpointId": "demo_id",
+					"manufacturerName": "Smart Device Company",
+					"friendlyName": "Bedroom Outlet",
+					"description": "Smart Device Switch",
+					"displayCategories": [
+						"SWITCH"
+					],
+					"cookie": {
+						"key1": "arbitrary key/value pairs for skill to reference this endpoint.",
+						"key2": "There can be multiple entries",
+						"key3": "but they should only be used for reference purposes.",
+						"key4": "This is not a suitable place to maintain current endpoint state."
+					},
+					"capabilities": [
+						{
+							"type": "AlexaInterface",
+							"version": "3",
+							"interface": "Alexa"
+						},
+						{
+							"type": "AlexaInterface",
+							"version": "3",
+							"interface": "Alexa.PowerController",
+							"properties": {
+								"supported": [
+									{
+										"name": "powerState"
+									}
+								],
+								"retrievable": true
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+}
