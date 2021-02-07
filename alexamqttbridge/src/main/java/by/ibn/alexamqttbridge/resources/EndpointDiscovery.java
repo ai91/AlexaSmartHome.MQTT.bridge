@@ -18,6 +18,8 @@ public class EndpointDiscovery {
 	
 	public String description;
 	
+	public EndpointAdditionalAttributes additionalAttributes;
+	
 	public List<String> displayCategories;
 	
 	public Cookie cookie;

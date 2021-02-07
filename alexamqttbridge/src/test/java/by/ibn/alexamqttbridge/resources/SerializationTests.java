@@ -65,10 +65,13 @@ class SerializationTests {
 		endpoint.cookie.key3 = "but they should only be used for reference purposes.";
 		endpoint.cookie.key4 = "This is not a suitable place to maintain current endpoint state.";
 		endpoint.capabilities = new ArrayList<>();
-		
-		// must be skipped on serialization
-		endpoint.rules = new ArrayList<>();
-		endpoint.states = new ArrayList<>();
+		endpoint.additionalAttributes = new EndpointAdditionalAttributes();
+		endpoint.additionalAttributes.manufacturer = "Smart Device Manufacturer";
+		endpoint.additionalAttributes.model = "Super Model";
+		endpoint.additionalAttributes.serialNumber = "0001";
+		endpoint.additionalAttributes.firmwareVersion = "1.0";
+		endpoint.additionalAttributes.softwareVersion = "1.0";
+		endpoint.additionalAttributes.customIdentifier = "id0001";
 		
 		Capability capability1 = new Capability();
 		capability1.type = "AlexaInterface";
@@ -81,12 +84,17 @@ class SerializationTests {
 		capability2.version = "3";
 		capability2.properties = new CapabilityProperties();
 		capability2.properties.retrievable = Boolean.TRUE;
+		capability2.properties.proactivelyReported = Boolean.TRUE;
 		capability2.properties.supported = new ArrayList<>();
 		capability2.properties.supported.add(new CapabilityProperty());
 		capability2.properties.supported.get(0).name = "powerState";
 		endpoint.capabilities.add(capability2);
 		((PayloadDiscoveryResponse)response.event.payload).endpoints.add(endpoint);
 
+		// must be skipped on serialization
+		endpoint.rules = new ArrayList<>();
+		endpoint.states = new ArrayList<>();
+		
 		String json = new ObjectMapper().writerFor(Response.class).writeValueAsString(response);
 		
 		assertEquals(expectedString.replaceAll("\\s+", ""), json.replaceAll("\\s+", ""));

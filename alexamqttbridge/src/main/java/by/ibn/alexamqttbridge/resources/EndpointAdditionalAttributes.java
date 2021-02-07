@@ -1,19 +1,23 @@
 package by.ibn.alexamqttbridge.resources;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CapabilityProperties {
+public class EndpointAdditionalAttributes {
 	
-	public List<CapabilityProperty> supported;
+	public String manufacturer;
 	
-	public Boolean proactivelyReported;
+	public String model;
 	
-	public Boolean retrievable;
+	public String serialNumber;
+	
+	public String firmwareVersion;
+	
+	public String softwareVersion;
+	
+	public String customIdentifier;
 
 }

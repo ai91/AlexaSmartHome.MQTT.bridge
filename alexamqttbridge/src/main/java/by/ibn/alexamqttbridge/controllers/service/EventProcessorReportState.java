@@ -52,7 +52,7 @@ public class EventProcessorReportState extends EventProcessor {
 					ContextProperty property = new ContextProperty();
 					property.namespace = deviceState.interFace;
 					property.name = deviceState.propertyName;
-					
+					response.context.properties.add(property);
 					// convert the value (converted via first matching rule. if none matches - send as it is)
 					String alexaValue = deviceState.state;
 					for (DeviceBridgingRule rule: device.rules) {
@@ -89,7 +89,6 @@ public class EventProcessorReportState extends EventProcessor {
 				response.event.header = request.directive.header;
 				response.event.header.name = "StateReport";
 				response.event.payload = new PayloadResponse();;
-				
 				response.event.endpoint = request.directive.endpoint; 
 			}
 			

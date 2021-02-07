@@ -172,6 +172,7 @@ public class DeviceRepository {
 			log.error("");
 			log.error("Can't load devices config. Please make sure you configured application properly.");
 			log.error("By default application searches for configuration in the ./config/devices.json file.");
+			log.error("If used ai91/alexamqttbridge docker, then it's equivalent to /workspace/config/devices.json file.");
 			log.error("Nevertheless it's possible to configure another path in different ways.");
 			log.error("Few examples for /app/config/devices.json:");
 			log.error("  - Environment variable DEVICESPATH. Example: export DEVICESPATH=/app/config");

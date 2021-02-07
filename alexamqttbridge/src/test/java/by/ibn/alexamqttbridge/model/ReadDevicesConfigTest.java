@@ -27,6 +27,13 @@ class ReadDevicesConfigTest {
 		assertEquals("Smart Device Company", devicesConfig.devices.get(0).manufacturerName);
 		assertEquals("Bedroom Outlet", devicesConfig.devices.get(0).friendlyName);
 		assertEquals("Smart Device Switch", devicesConfig.devices.get(0).description);
+		assertNotNull(devicesConfig.devices.get(0).additionalAttributes);
+		assertEquals("Smart Device Manufacturer", devicesConfig.devices.get(0).additionalAttributes.manufacturer);
+		assertEquals("Super Model", devicesConfig.devices.get(0).additionalAttributes.model);
+		assertEquals("0001", devicesConfig.devices.get(0).additionalAttributes.serialNumber);
+		assertEquals("1.0", devicesConfig.devices.get(0).additionalAttributes.firmwareVersion);
+		assertEquals("1.0", devicesConfig.devices.get(0).additionalAttributes.softwareVersion);
+		assertEquals("id0001", devicesConfig.devices.get(0).additionalAttributes.customIdentifier);
 		assertNotNull(devicesConfig.devices.get(0).displayCategories);
 		assertEquals(1, devicesConfig.devices.get(0).displayCategories.size());
 		assertEquals("SWITCH", devicesConfig.devices.get(0).displayCategories.get(0));
@@ -43,6 +50,7 @@ class ReadDevicesConfigTest {
 		assertEquals("AlexaInterface", devicesConfig.devices.get(0).capabilities.get(1).type);
 		assertEquals("Alexa.PowerController", devicesConfig.devices.get(0).capabilities.get(1).interFace);
 		assertNotNull(devicesConfig.devices.get(0).capabilities.get(1).properties);
+		assertEquals(Boolean.FALSE, devicesConfig.devices.get(0).capabilities.get(1).properties.proactivelyReported);
 		assertEquals(Boolean.TRUE, devicesConfig.devices.get(0).capabilities.get(1).properties.retrievable);
 		assertNotNull(devicesConfig.devices.get(0).capabilities.get(1).properties.supported);
 		assertEquals(1, devicesConfig.devices.get(0).capabilities.get(1).properties.supported.size());

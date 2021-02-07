@@ -13,6 +13,14 @@
 					"manufacturerName": "Smart Device Company",
 					"friendlyName": "Bedroom Outlet",
 					"description": "Smart Device Switch",
+					"additionalAttributes":  {
+					  "manufacturer" : "Smart Device Manufacturer",
+					  "model" : "Super Model",
+					  "serialNumber": "0001",
+					  "firmwareVersion" : "1.0",
+					  "softwareVersion": "1.0",
+					  "customIdentifier": "id0001"
+					},
 					"displayCategories": [
 						"SWITCH"
 					],
@@ -38,6 +46,7 @@
 										"name": "powerState"
 									}
 								],
+								"proactivelyReported": true,
 								"retrievable": true
 							}
 						}
