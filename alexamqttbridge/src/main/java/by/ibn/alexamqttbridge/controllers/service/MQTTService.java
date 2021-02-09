@@ -74,10 +74,7 @@ public class MQTTService {
 					String value = new String(msg.getPayload());
 					log.trace("Received message on topic {}: {}", tpic, value );
 					
-					if (!StringUtils.equals(deviceState.state, value)) {
-						deviceState.lastChange = ZonedDateTime.now();
-					}
-					deviceState.lastRepeat = ZonedDateTime.now();
+					deviceState.lastUpdate = ZonedDateTime.now();
 					deviceState.state = value;
 					
 				});

@@ -12,8 +12,6 @@ public class DeviceState {
 	
 	public String state;
 	
-	public ZonedDateTime lastChange;
-	
-	public ZonedDateTime lastRepeat;
+	public ZonedDateTime lastUpdate;
 	
 }

@@ -79,14 +79,9 @@ public class EventProcessorReportState extends EventProcessor {
 					property.value = alexaValue;
 					
 					
-					if (deviceState.lastChange != null) {
-						property.timeOfSample = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(deviceState.lastChange);
-						
-						if (deviceState.lastRepeat == null) {
-							property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastChange.toInstant().toEpochMilli();
-						} else {
-							property.uncertaintyInMilliseconds = deviceState.lastRepeat.toInstant().toEpochMilli() - deviceState.lastChange.toInstant().toEpochMilli();
-						}
+					if (deviceState.lastUpdate != null) {
+						property.timeOfSample = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(deviceState.lastUpdate);
+						property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastUpdate.toInstant().toEpochMilli();
 					}
 					
 				}
