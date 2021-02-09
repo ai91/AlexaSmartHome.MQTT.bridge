@@ -18,7 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import by.ibn.alexamqttbridge.MQTTConfiguration;
 import by.ibn.alexamqttbridge.model.Device;
-import by.ibn.alexamqttbridge.resources.EndpointDiscovery;
+import by.ibn.alexamqttbridge.resources.Endpoint;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -36,7 +36,7 @@ class DeviceRepositoryTest {
 	@Test
 	void loadConfig() {
 		
-		List<EndpointDiscovery> endpoints = testee.getEndpoints();
+		List<Endpoint> endpoints = testee.getEndpoints();
 		
 		assertNotNull(endpoints);
 		assertEquals(1, endpoints.size());

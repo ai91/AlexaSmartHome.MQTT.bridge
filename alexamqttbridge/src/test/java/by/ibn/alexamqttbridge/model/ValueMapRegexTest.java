@@ -10,20 +10,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.ibn.alexamqttbridge.TestUtil;
 
-class ValueMapValueTest {
+class ValueMapRegexTest {
 
 	@Test
 	void test() throws JsonMappingException, JsonProcessingException {
 		
-		String jsonString = TestUtil.readResource("/valuemapstest/value.json");
+		String jsonString = TestUtil.readResource("/valuemapstest/regex.json");
 		
-		ValueMapValue valueMap = new ObjectMapper().readerFor(ValueMapValue.class).readValue(jsonString);
+		ValueMapRegex valueMap = new ObjectMapper().readerFor(ValueMapRegex.class).readValue(jsonString);
 		
 		assertFalse(valueMap.isApplicable("1"));
 		assertFalse(valueMap.isApplicable("on"));
-		assertTrue(valueMap.isApplicable("TurnOn"));
+		assertTrue(valueMap.isApplicable("cmd23"));
 		
-		assertEquals("1", valueMap.map("TurnOn"));
+		assertEquals("mva23", valueMap.map("cmd23"));
 		
 	}
 

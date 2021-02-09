@@ -52,6 +52,7 @@ public class EventProcessorReportState extends EventProcessor {
 					ContextProperty property = new ContextProperty();
 					property.namespace = deviceState.interFace;
 					property.name = deviceState.propertyName;
+					property.instance = deviceState.instance;
 					response.context.properties.add(property);
 					// convert the value (converted via first matching rule. if none matches - send as it is)
 					String alexaValue = deviceState.state;
@@ -59,8 +60,8 @@ public class EventProcessorReportState extends EventProcessor {
 						if (rule.valueMapsToAlexa != null) {
 							boolean matched = false;
 							for (ValueMap valueMap: rule.valueMapsToAlexa) {
-								if (valueMap.isApplicableToAlexa(deviceState.state)) {
-									alexaValue = valueMap.mapToAlexa(deviceState.state);
+								if (valueMap.isApplicable(deviceState.state)) {
+									alexaValue = valueMap.map(deviceState.state);
 									matched = true;
 									break;
 								}

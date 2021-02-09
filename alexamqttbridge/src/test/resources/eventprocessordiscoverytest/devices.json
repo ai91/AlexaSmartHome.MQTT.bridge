@@ -2,6 +2,21 @@
     "devices": [
         {
             "endpointId": "_endpoint_id",
+			"capabilities": [
+				{
+					"type": "AlexaInterface",
+					"interface": "Alexa",
+					"version": "3",
+				  	"configuration": {
+				      "supportedRange": {
+				          "minimumValue": 0,
+				          "maximumValue": 100,
+				          "precision": 1
+				      },
+				      "unitOfMeasure": "Alexa.Unit.Percent"
+				  	}
+			  	}
+		  	],
 			"rules": [
 				{
 					"alexa": {
@@ -12,7 +27,7 @@
 						"state": "_state"
 					},
 					"valueMapsToAlexa": [
-						{ "type": "value", "mqtt": "_mqtt", "alexa": "_alexa" }
+						{ "type": "value", "from": "_alexa", "to": "_mqtt" }
 					]
 				}
 			]

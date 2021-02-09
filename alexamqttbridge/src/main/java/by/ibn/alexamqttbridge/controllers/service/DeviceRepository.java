@@ -26,7 +26,7 @@ import by.ibn.alexamqttbridge.model.DeviceBridgingRule;
 import by.ibn.alexamqttbridge.model.DeviceState;
 import by.ibn.alexamqttbridge.model.DevicesConfig;
 import by.ibn.alexamqttbridge.model.ValueMap;
-import by.ibn.alexamqttbridge.resources.EndpointDiscovery;
+import by.ibn.alexamqttbridge.resources.Endpoint;
 
 @Component
 public class DeviceRepository {
@@ -43,9 +43,9 @@ public class DeviceRepository {
 	
 	private List<Device> devices;
 	
-	public List<EndpointDiscovery> getEndpoints() {
+	public List<Endpoint> getEndpoints() {
 		
-		return getDevices().stream().map( d -> (EndpointDiscovery)d).collect(Collectors.toList());
+		return getDevices().stream().map( d -> (Endpoint)d).collect(Collectors.toList());
 		
 	}
 	
@@ -146,6 +146,7 @@ public class DeviceRepository {
 		        			DeviceState state = new DeviceState();
 		        			state.interFace = rule.alexa.interFace;
 		        			state.propertyName = rule.alexa.propertyName;
+		        			state.instance = rule.alexa.instance;
 		        			state.state = "";
 		        			states.add(state);
 		        			

@@ -31,6 +31,13 @@ public class EventService {
 			
 			log.trace("Processor {}: not processable", eventProcessor.getClass().getName());
 		}
+		
+		if (request != null && request.directive != null && request.directive.header != null) {
+			log.warn("Received request for {} interface with {} directive with payloadVersion {}, but no appropriate processor has been found. "
+					+ "Either ignore, or implement support.", request.directive.header.namespace, request.directive.header.name, request.directive.header.payloadVersion);
+		} else {
+			log.warn("Unsupported request. Ignoring.");
+		}
 
 		return null;
 	}

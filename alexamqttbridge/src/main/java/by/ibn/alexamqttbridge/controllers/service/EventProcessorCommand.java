@@ -30,7 +30,17 @@ public class EventProcessorCommand extends EventProcessor {
 	private MQTTService mqttService;
 
 	public EventProcessorCommand() {
-		super(new String[]{"Alexa.PowerController"}, new String[]{"TurnOn", "TurnOff"});
+		super(
+				new String[]{"Alexa.PowerController", "Alexa.RangeController", "Alexa.ToggleController", "Alexa.ModeController",
+						"Alexa.BrightnessController", "Alexa.ColorController", "Alexa.ColorTemperatureController",
+						"Alexa.PercentageController", "Alexa.PowerLevelController", "Alexa.SceneController", "Alexa.ThermostatController",
+						"Alexa.TimeHoldController"}, 
+				new String[]{"TurnOn", "TurnOff", "SetRangeValue", "AdjustRangeValue", "SetMode", "AdjustMode",
+						"SetBrightness", "AdjustBrightness", "SetColor", "SetColorTemperature", "IncreaseColorTemperature",
+						"DecreaseColorTemperature", "SetPercentage", "AdjustPercentage", "SetPowerLevel", "AdjustPowerLevel",
+						"Activate", "Deactivate", "SetTargetTemperature", "AdjustTargetTemperature", "SetThermostatMode",
+						"ResumeSchedule", "Hold", "Resume"}
+		);
 	}
 	
 	@Override
@@ -54,8 +64,8 @@ public class EventProcessorCommand extends EventProcessor {
 					
 					if (rule.valueMapsToMqtt != null && StringUtils.isNotBlank(rule.mqtt.commands)) {
 						for (ValueMap valueMap: rule.valueMapsToMqtt) {
-							if (valueMap.isApplicableToMqtt(alexaValue)) {
-								mqttValue = valueMap.mapToMqtt(alexaValue);
+							if (valueMap.isApplicable(alexaValue)) {
+								mqttValue = valueMap.map(alexaValue);
 								mqttService.sendMessage(rule.mqtt.commands, mqttValue);
 								break;
 							}
@@ -73,14 +83,15 @@ public class EventProcessorCommand extends EventProcessor {
 					ContextProperty property = new ContextProperty();
 					property.namespace = deviceState.interFace;
 					property.name = deviceState.propertyName;
+					property.instance = deviceState.instance;
 					// convert the value back (the last known device state, converted via first matching rule)
 					alexaValue = deviceState.state;
 					for (DeviceBridgingRule rule: device.rules) {
 						if (rule.valueMapsToAlexa != null) {
 							boolean matched = false;
 							for (ValueMap valueMap: rule.valueMapsToAlexa) {
-								if (valueMap.isApplicableToAlexa(deviceState.state)) {
-									alexaValue = valueMap.mapToAlexa(deviceState.state);
+								if (valueMap.isApplicable(deviceState.state)) {
+									alexaValue = valueMap.map(deviceState.state);
 									matched = true;
 									break;
 								}

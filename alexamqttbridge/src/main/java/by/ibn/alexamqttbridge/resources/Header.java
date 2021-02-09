@@ -12,6 +12,8 @@ public class Header {
 	
 	public String name;
 	
+	public String instance;
+	
 	public String payloadVersion;
 	
 	public String messageId;

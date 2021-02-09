@@ -10,9 +10,6 @@
 			"endpoints": [
 				{
 					"endpointId": "demo_id",
-					"manufacturerName": "Smart Device Company",
-					"friendlyName": "Bedroom Outlet",
-					"description": "Smart Device Switch",
 					"additionalAttributes":  {
 					  "manufacturer" : "Smart Device Manufacturer",
 					  "model" : "Super Model",
@@ -20,15 +17,6 @@
 					  "firmwareVersion" : "1.0",
 					  "softwareVersion": "1.0",
 					  "customIdentifier": "id0001"
-					},
-					"displayCategories": [
-						"SWITCH"
-					],
-					"cookie": {
-						"key1": "arbitrary key/value pairs for skill to reference this endpoint.",
-						"key2": "There can be multiple entries",
-						"key3": "but they should only be used for reference purposes.",
-						"key4": "This is not a suitable place to maintain current endpoint state."
 					},
 					"capabilities": [
 						{
@@ -50,7 +38,19 @@
 								"retrievable": true
 							}
 						}
-					]
+					],
+					"cookie": {
+						"key1": "arbitrary key/value pairs for skill to reference this endpoint.",
+						"key2": "There can be multiple entries",
+						"key3": "but they should only be used for reference purposes.",
+						"key4": "This is not a suitable place to maintain current endpoint state."
+					},
+					"description": "Smart Device Switch",
+					"displayCategories": [
+						"SWITCH"
+					],
+					"friendlyName": "Bedroom Outlet",
+					"manufacturerName": "Smart Device Company"
 				}
 			]
 		}

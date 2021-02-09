@@ -18,6 +18,7 @@ public abstract class EventProcessor {
 	}
 	
 	public boolean isProcessable(Request request) {
+		
 		return request != null && 
 				request.directive != null && 
 				request.directive.header != null &&

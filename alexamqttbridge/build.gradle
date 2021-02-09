@@ -21,6 +21,8 @@ dependencies {
 	
 	implementation 'org.apache.commons:commons-lang3:3.11'
 	implementation 'org.springframework.integration:spring-integration-mqtt:5.4.3'
+	
+	implementation 'net.objecthunter:exp4j:0.4.8'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

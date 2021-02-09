@@ -13,16 +13,16 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 )
 @JsonSubTypes({
 	@Type(value = ValueMapValue.class, name = "value"),
+	@Type(value = ValueMapLinearRange.class, name = "linearRange"),
+	@Type(value = ValueMapRegex.class, name = "regex"),
+	@Type(value = ValueMapStatic.class, name = "static"),
+	@Type(value = ValueMapFormula.class, name = "formula")
 })
 public abstract class ValueMap {
 	
-	public abstract boolean isApplicableToAlexa(String value);
+	public abstract boolean isApplicable(String value);
 	
-	public abstract boolean isApplicableToMqtt(String value);
-	
-	public abstract String mapToAlexa(String value);
-	
-	public abstract String mapToMqtt(String value);
+	public abstract String map(String value);
 	
 	public abstract boolean isValidConfig();
 

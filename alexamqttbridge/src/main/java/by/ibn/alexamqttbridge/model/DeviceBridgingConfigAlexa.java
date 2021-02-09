@@ -12,4 +12,7 @@ public class DeviceBridgingConfigAlexa {
 	@JsonProperty("propertyName")
 	public String propertyName;
 
+	@JsonProperty("instance")
+	public String instance;
+	
 }

@@ -10,20 +10,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.ibn.alexamqttbridge.TestUtil;
 
-class ValueMapValueTest {
+class ValueMapStaticTest {
 
 	@Test
 	void test() throws JsonMappingException, JsonProcessingException {
 		
-		String jsonString = TestUtil.readResource("/valuemapstest/value.json");
+		String jsonString = TestUtil.readResource("/valuemapstest/static.json");
 		
-		ValueMapValue valueMap = new ObjectMapper().readerFor(ValueMapValue.class).readValue(jsonString);
+		ValueMapStatic valueMap = new ObjectMapper().readerFor(ValueMapStatic.class).readValue(jsonString);
 		
-		assertFalse(valueMap.isApplicable("1"));
-		assertFalse(valueMap.isApplicable("on"));
-		assertTrue(valueMap.isApplicable("TurnOn"));
+		assertTrue(valueMap.isApplicable("cmd23"));
 		
-		assertEquals("1", valueMap.map("TurnOn"));
+		assertEquals("http://someUrlToACameraStream", valueMap.map("cmd23"));
 		
 	}
 

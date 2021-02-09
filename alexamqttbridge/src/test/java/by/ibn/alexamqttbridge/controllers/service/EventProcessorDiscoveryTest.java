@@ -18,9 +18,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 import by.ibn.alexamqttbridge.MQTTConfiguration;
 import by.ibn.alexamqttbridge.resources.Directive;
-import by.ibn.alexamqttbridge.resources.EndpointDiscovery;
+import by.ibn.alexamqttbridge.resources.Endpoint;
 import by.ibn.alexamqttbridge.resources.Header;
-import by.ibn.alexamqttbridge.resources.PayloadDiscoveryResponse;
 import by.ibn.alexamqttbridge.resources.Request;
 import by.ibn.alexamqttbridge.resources.Response;
 
@@ -50,8 +49,8 @@ class EventProcessorDiscoveryTest {
 		request.directive.header.payloadVersion = "3";
 		request.directive.header.messageId = "_messageId";
 		
-		List<EndpointDiscovery> expectedEndpoints = new ArrayList<EndpointDiscovery>();
-		EndpointDiscovery expectedEndpoint = new EndpointDiscovery();
+		List<Endpoint> expectedEndpoints = new ArrayList<>();
+		Endpoint expectedEndpoint = new Endpoint();
 		expectedEndpoint.endpointId = "_endpoint_id";
 		expectedEndpoints.add(expectedEndpoint);
 		Mockito.when(deviceRepository.getEndpoints()).thenReturn(expectedEndpoints);
@@ -68,10 +67,9 @@ class EventProcessorDiscoveryTest {
 		assertEquals("_messageId", response.event.header.messageId);
 		
 		assertNotNull(response.event.payload);
-		PayloadDiscoveryResponse payload = (PayloadDiscoveryResponse) response.event.payload;
-		assertNotNull(payload.endpoints);
-		assertEquals(1, payload.endpoints.size());
-		assertEquals("_endpoint_id", payload.endpoints.get(0).endpointId);
+		assertNotNull(response.event.payload.endpoints);
+		assertEquals(1, response.event.payload.endpoints.size());
+		assertEquals("_endpoint_id", response.event.payload.endpoints.get(0).endpointId);
 		
 	}
 

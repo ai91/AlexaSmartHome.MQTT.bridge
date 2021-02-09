@@ -8,6 +8,8 @@ public class DeviceState {
 	
 	public String propertyName;
 	
+	public String instance;
+	
 	public String state;
 	
 	public ZonedDateTime lastChange;

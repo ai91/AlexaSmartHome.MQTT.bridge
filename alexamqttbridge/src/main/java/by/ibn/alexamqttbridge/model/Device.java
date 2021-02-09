@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import by.ibn.alexamqttbridge.resources.EndpointDiscovery;
+import by.ibn.alexamqttbridge.resources.Endpoint;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Device extends EndpointDiscovery {
+public class Device extends Endpoint {
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	public List<DeviceBridgingRule> rules;

@@ -12,6 +12,8 @@ public class ContextProperty {
 	
 	public String name;
 	
+	public String instance;
+	
 	public String value;
 	
 	public String timeOfSample;

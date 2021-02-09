@@ -1,1 +1,1 @@
-{ "type": "value", "mqtt": "1", "alexa": "TurnOn" }
+{ "type": "value", "from": "TurnOn", "to": "1" }

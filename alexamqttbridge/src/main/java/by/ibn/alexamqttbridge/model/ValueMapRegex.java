@@ -1,29 +1,30 @@
 package by.ibn.alexamqttbridge.model;
 
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ValueMapValue extends ValueMap {
+public class ValueMapRegex extends ValueMap {
 
-	public String from;
+	public String search;
+	public String replace;
 	
-	public String to;
-
 	@Override
 	public boolean isApplicable(String value) {
-		return StringUtils.equalsIgnoreCase(value, from);
+		return Pattern.matches(search, value);
 	}
 
 	@Override
 	public String map(String value) {
-		return to;
+		return value.replaceAll(search, replace);
 	}
 
 	@Override
 	public boolean isValidConfig() {
-		return StringUtils.isNoneBlank(from, to);
+		return StringUtils.isNoneBlank(search, replace);
 	}
 
 }

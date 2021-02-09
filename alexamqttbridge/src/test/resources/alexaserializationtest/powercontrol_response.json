@@ -19,11 +19,11 @@
             "correlationToken": "ToKeN1"
         },
         "endpoint": {
+            "endpointId": "demo_id",
             "scope": {
                 "type": "BearerToken",
                 "token": "ToKeN2"
-            },
-            "endpointId": "demo_id"
+            }
         },
         "payload": {}
     }

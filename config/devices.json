@@ -55,12 +55,12 @@
 						"state": "house/outlet/bedroom/state"
 					},
 					"valueMapsToAlexa": [
-						{ "type": "value", "mqtt": "1", "alexa": "ON" },
-						{ "type": "value", "mqtt": "0", "alexa": "OFF" }
+						{ "type": "value", "from": "1", "to": "ON" },
+						{ "type": "value", "from": "0", "to": "OFF" }
 					],
 					"valueMapsToMqtt": [
-						{ "type": "value", "mqtt": "1", "alexa": "TurnOn" },
-						{ "type": "value", "mqtt": "0", "alexa": "TurnOff" }
+						{ "type": "value", "from": "TurnOn", "to": "1" },
+						{ "type": "value", "from": "TurnOff", "to": "0" }
 					]
 				}
 			]

@@ -5,25 +5,23 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ValueMapValue extends ValueMap {
+public class ValueMapStatic extends ValueMap {
 
-	public String from;
+	public String value;
 	
-	public String to;
-
 	@Override
 	public boolean isApplicable(String value) {
-		return StringUtils.equalsIgnoreCase(value, from);
+		return true;
 	}
 
 	@Override
 	public String map(String value) {
-		return to;
+		return this.value;
 	}
 
 	@Override
 	public boolean isValidConfig() {
-		return StringUtils.isNoneBlank(from, to);
+		return StringUtils.isNotBlank(value);
 	}
 
 }
