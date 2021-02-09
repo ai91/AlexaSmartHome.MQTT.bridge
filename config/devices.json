@@ -1,69 +1,182 @@
 {
 	"devices": [
+	
 		{
-			"endpointId": "demo_id",
-			"manufacturerName": "Smart Device Company",
-			"friendlyName": "Bedroom Outlet",
-			"description": "Smart Device Switch",
+			"endpointId": "light_kitchen",
+			"manufacturerName": "IBN",
+			"friendlyName": "Kitchen light",
+			"description": "Light in the kitchen",
 			"additionalAttributes":  {
-			  "manufacturer" : "Smart Device Manufacturer",
-			  "model" : "Super Model",
-			  "serialNumber": "0001",
-			  "firmwareVersion" : "1.0",
-			  "softwareVersion": "1.0",
-			  "customIdentifier": "id0001"
+				"manufacturer" : "IBN",
+				"model" : "Dee",
+				"serialNumber": "0001",
+				"firmwareVersion" : "1.0",
+				"softwareVersion": "1.0",
+				"customIdentifier": "light_kitchen"
 			},
-			"displayCategories": [
-				"SWITCH"
-			],
-			"cookie": {
-				"key1": "arbitrary key/value pairs for skill to reference this endpoint.",
-				"key2": "There can be multiple entries",
-				"key3": "but they should only be used for reference purposes.",
-				"key4": "This is not a suitable place to maintain current endpoint state."
-			},
+			"displayCategories": [ "LIGHT" ],
 			"capabilities": [
 				{
-					"type": "AlexaInterface",
-					"interface": "Alexa",
-					"version": "3"
+					"type": "AlexaInterface", "interface": "Alexa", "version": "3"
 				},
 				{
-					"interface": "Alexa.PowerController",
-					"version": "3",
-					"type": "AlexaInterface",
+					"type": "AlexaInterface", "interface": "Alexa.PowerController", "version": "3",
 					"properties": {
-						"supported": [
-							{
-								"name": "powerState"
-							}
-						],
-						"proactivelyReported": false,
-						"retrievable": true
+						"supported": [ { "name": "powerState" } ],
+						"retrievable": true,
+						"proactivelyReported": false
 					}
 				}
 			],
-			
 			"rules": [
 				{
-					"alexa": {
-						"interface": "Alexa.PowerController",
-                        "propertyName": "powerState"
-					},
-					"mqtt": {
-						"commands": "house/outlet/bedroom/command",
-						"state": "house/outlet/bedroom/state"
-					},
+					"alexa": { "interface": "Alexa.PowerController", "propertyName": "powerState" },
+					"mqtt": { "state": "light/kitchen/sta" },
 					"valueMapsToAlexa": [
 						{ "type": "value", "from": "1", "to": "ON" },
-						{ "type": "value", "from": "0", "to": "OFF" }
-					],
+						{ "type": "value", "from": "0", "to": "OFF" },
+						{ "type": "value", "from": "1.", "to": "ON" },
+						{ "type": "value", "from": "0.", "to": "OFF" }
+					]
+				},
+				{
+					"alexa": { "interface": "Alexa.PowerController", "directiveName": "TurnOn" },
+					"mqtt": { "commands": "light/kitchen/cmd" },
+					"valueMapsToMqtt": [ 
+						{ "type": "static", "value": "1" } 
+					]
+				},
+				{
+					"alexa": { "interface": "Alexa.PowerController", "directiveName": "TurnOff" },
+					"mqtt": { "commands": "light/kitchen/cmd" },
+					"valueMapsToMqtt": [ 
+						{ "type": "static", "value": "0" } 
+					]
+				}
+			]
+		},
+		
+		{
+			"endpointId": "blinds_kitchen",
+			"manufacturerName": "IBN",
+			"friendlyName": "Kitchen blinds",
+			"description": "Blinds in the kitchen",
+			"additionalAttributes":  {
+				"manufacturer" : "IBN",
+				"model" : "Dorfl",
+				"serialNumber": "0001",
+				"firmwareVersion" : "1.0",
+				"softwareVersion": "1.0",
+				"customIdentifier": "blinds_kitchen"
+			},
+			"displayCategories": [ "INTERIOR_BLIND" ],
+			"capabilities": [
+				{
+					"type": "AlexaInterface", "interface": "Alexa", "version": "3" 
+				},
+				{
+					"type": "AlexaInterface", "interface": "Alexa.RangeController", "version": "3",
+					"instance": "Blind.Lift", 
+					"properties": {
+						"supported": [ { "name": "rangeValue" } ],
+						"proactivelyReported": false,
+						"retrievable": true
+					},
+					"capabilityResources": {
+						"friendlyNames": [ { "@type": "asset", "value": { "assetId": "Alexa.Setting.Opening" } } ]
+					},
+				  "configuration": {
+						"supportedRange": { "minimumValue": 0, "maximumValue": 100, "precision": 1 },
+						"unitOfMeasure": "Alexa.Unit.Percent"
+				  },
+				  "semantics": {
+						"actionMappings": [{
+								"@type": "ActionsToDirective",
+								"actions": ["Alexa.Actions.Close"],
+								"directive": { "name": "SetRangeValue", "payload": { "rangeValue": 0 } }
+							}, {
+								"@type": "ActionsToDirective",
+								"actions": ["Alexa.Actions.Open"],
+								"directive": { "name": "SetRangeValue", "payload": { "rangeValue": 100 } }
+							}, {
+								"@type": "ActionsToDirective",
+								"actions": ["Alexa.Actions.Lower"],
+								"directive": { "name": "AdjustRangeValue", "payload": { "rangeValueDelta": -10, "rangeValueDeltaDefault": false } }
+							}, {
+								"@type": "ActionsToDirective",
+								"actions": ["Alexa.Actions.Raise"],
+								"directive": { "name": "AdjustRangeValue", "payload": { "rangeValueDelta": 10, "rangeValueDeltaDefault": false } }
+						}],
+						"stateMappings": [{
+								"@type": "StatesToValue",
+								"states": ["Alexa.States.Closed"],
+								"value": 0
+							}, {
+								"@type": "StatesToRange",
+								"states": ["Alexa.States.Open"],
+								"range": { "minimumValue": 1, "maximumValue": 100 }
+						}]
+					}
+				}
+			],
+			"rules": [
+				{
+					"alexa": { "interface": "Alexa.RangeController", "instance": "Blind.Lift", "propertyName": "rangeValue" },
+					"mqtt": { "state": "blinds/kitchen/pos" },
+					"valueMapsToAlexa": [ 
+						{ "type": "linearRange", "fromMin": 12, "fromMax": 0, "toMin": 0, "toMax": 100, "rounded": true } 
+					]
+				},
+				{
+					"alexa": { "interface": "Alexa.RangeController", "instance": "Blind.Lift", "directiveName": "SetRangeValue", "payloadValue": "rangeValue" },
+					"mqtt": { "commands": "blinds/kitchen/cmd" },
 					"valueMapsToMqtt": [
-						{ "type": "value", "from": "TurnOn", "to": "1" },
-						{ "type": "value", "from": "TurnOff", "to": "0" }
+						{ "type": "regex", "search": "^[0-4](\\.[0-9]+)?$",  "replace": "mva12" },
+						{ "type": "regex", "search": "^[5-9](\\.[0-9]+)?$",  "replace": "mva11" },
+						{ "type": "regex", "search": "^1[0-9](\\.[0-9]+)?$", "replace": "mva9" },
+						{ "type": "regex", "search": "^2[0-9](\\.[0-9]+)?$", "replace": "mva8" },
+						{ "type": "regex", "search": "^3[0-9](\\.[0-9]+)?$", "replace": "mva7" },
+						{ "type": "regex", "search": "^4[0-9](\\.[0-9]+)?$", "replace": "mva6" },
+						{ "type": "regex", "search": "^5[0-9](\\.[0-9]+)?$", "replace": "mva5" },
+						{ "type": "regex", "search": "^6[0-9](\\.[0-9]+)?$", "replace": "mva4" },
+						{ "type": "regex", "search": "^7[0-9](\\.[0-9]+)?$", "replace": "mva3" },
+						{ "type": "regex", "search": "^8[0-9](\\.[0-9]+)?$", "replace": "mva2" },
+						{ "type": "regex", "search": "^9[0-9](\\.[0-9]+)?$", "replace": "mva1" },
+						{ "type": "regex", "search": "^100(\\.[0-9]+)?$",    "replace": "mva-5" }
+					]
+				},
+				{
+					"alexa": { "interface": "Alexa.RangeController", "instance": "Blind.Lift", "directiveName": "AdjustRangeValue", "payloadValue": "rangeValueDelta" },
+					"mqtt": { "commands": "blinds/kitchen/cmd" },
+					"valueMapsToMqtt": [
+						{ "type": "regex", "search": "^[0-4](\\.[0-9]+)?$",  "replace": "mvr-1" },
+						{ "type": "regex", "search": "^[5-9](\\.[0-9]+)?$",  "replace": "mvr-2" },
+						{ "type": "regex", "search": "^1[0-9](\\.[0-9]+)?$", "replace": "mvr-3" },
+						{ "type": "regex", "search": "^2[0-9](\\.[0-9]+)?$", "replace": "mvr-4" },
+						{ "type": "regex", "search": "^3[0-9](\\.[0-9]+)?$", "replace": "mvr-5" },
+						{ "type": "regex", "search": "^4[0-9](\\.[0-9]+)?$", "replace": "mvr-6" },
+						{ "type": "regex", "search": "^5[0-9](\\.[0-9]+)?$", "replace": "mvr-7" },
+						{ "type": "regex", "search": "^6[0-9](\\.[0-9]+)?$", "replace": "mvr-8" },
+						{ "type": "regex", "search": "^7[0-9](\\.[0-9]+)?$", "replace": "mvr-9" },
+						{ "type": "regex", "search": "^8[0-9](\\.[0-9]+)?$", "replace": "mvr-10" },
+						{ "type": "regex", "search": "^9[0-9](\\.[0-9]+)?$", "replace": "mvr-11" },
+						{ "type": "regex", "search": "^100(\\.[0-9]+)?$",    "replace": "mvr-12" },
+						{ "type": "regex", "search": "^-[0-4](\\.[0-9]+)?$",  "replace": "mvr1" },
+						{ "type": "regex", "search": "^-[5-9](\\.[0-9]+)?$",  "replace": "mvr2" },
+						{ "type": "regex", "search": "^-1[0-9](\\.[0-9]+)?$", "replace": "mvr3" },
+						{ "type": "regex", "search": "^-2[0-9](\\.[0-9]+)?$", "replace": "mvr4" },
+						{ "type": "regex", "search": "^-3[0-9](\\.[0-9]+)?$", "replace": "mvr5" },
+						{ "type": "regex", "search": "^-4[0-9](\\.[0-9]+)?$", "replace": "mvr6" },
+						{ "type": "regex", "search": "^-5[0-9](\\.[0-9]+)?$", "replace": "mvr7" },
+						{ "type": "regex", "search": "^-6[0-9](\\.[0-9]+)?$", "replace": "mvr8" },
+						{ "type": "regex", "search": "^-7[0-9](\\.[0-9]+)?$", "replace": "mvr9" },
+						{ "type": "regex", "search": "^-8[0-9](\\.[0-9]+)?$", "replace": "mvr10" },
+						{ "type": "regex", "search": "^-9[0-9](\\.[0-9]+)?$", "replace": "mvr11" },
+						{ "type": "regex", "search": "^-100(\\.[0-9]+)?$",    "replace": "mvr12" }
 					]
 				}
 			]
 		}
+		
 	]
 }

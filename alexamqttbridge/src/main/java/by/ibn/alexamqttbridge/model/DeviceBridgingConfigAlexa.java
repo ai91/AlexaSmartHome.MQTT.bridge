@@ -9,10 +9,16 @@ public class DeviceBridgingConfigAlexa {
 	@JsonProperty("interface")
 	public String interFace;
 	
-	@JsonProperty("propertyName")
-	public String propertyName;
-
 	@JsonProperty("instance")
 	public String instance;
+	
+	@JsonProperty("propertyName")
+	public String propertyName;
+	
+	@JsonProperty("directiveName")
+	public String directiveName;
+	
+	@JsonProperty("payloadValue")
+	public String payloadValue;
 	
 }

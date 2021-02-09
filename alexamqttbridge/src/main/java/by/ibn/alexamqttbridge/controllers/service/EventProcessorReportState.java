@@ -50,14 +50,19 @@ public class EventProcessorReportState extends EventProcessor {
 				
 				for (DeviceState deviceState: device.states) {
 					ContextProperty property = new ContextProperty();
+					response.context.properties.add(property);
 					property.namespace = deviceState.interFace;
 					property.name = deviceState.propertyName;
 					property.instance = deviceState.instance;
-					response.context.properties.add(property);
 					// convert the value (converted via first matching rule. if none matches - send as it is)
 					String alexaValue = deviceState.state;
 					for (DeviceBridgingRule rule: device.rules) {
-						if (rule.valueMapsToAlexa != null) {
+						
+						if (StringUtils.equals(deviceState.interFace, rule.alexa.interFace) &&
+								StringUtils.equals(deviceState.propertyName, rule.alexa.propertyName) &&
+								StringUtils.equals(deviceState.instance, rule.alexa.instance) && 
+								rule.valueMapsToAlexa != null) {
+							
 							boolean matched = false;
 							for (ValueMap valueMap: rule.valueMapsToAlexa) {
 								if (valueMap.isApplicable(deviceState.state)) {

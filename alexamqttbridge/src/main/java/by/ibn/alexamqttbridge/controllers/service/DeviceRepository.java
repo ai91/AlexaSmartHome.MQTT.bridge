@@ -113,8 +113,8 @@ public class DeviceRepository {
 		    			log.trace("  found {} rule definitions. Validating and cleaning up...", device.rules.size());
 		    			
 		        		for (DeviceBridgingRule rule: device.rules) {
-		        			if (rule.alexa == null || StringUtils.isAnyBlank(rule.alexa.interFace, rule.alexa.propertyName)) {
-		        				log.warn("Device {} has misconfigured rule: no alexa.interface and/or alexa.propertyName is defined. Skipping rule definition.", device.endpointId);
+		        			if (rule.alexa == null || StringUtils.isBlank(rule.alexa.interFace)) {
+		        				log.warn("Device {} has misconfigured rule: no alexa.interface. Skipping rule definition.", device.endpointId);
 		        				continue;
 		        			}
 		        			if (rule.mqtt == null || StringUtils.isAllBlank(rule.mqtt.commands, rule.mqtt.state)) {
@@ -144,11 +144,13 @@ public class DeviceRepository {
 		        			}
 		        			rules.add(rule);
 		        			DeviceState state = new DeviceState();
-		        			state.interFace = rule.alexa.interFace;
-		        			state.propertyName = rule.alexa.propertyName;
-		        			state.instance = rule.alexa.instance;
-		        			state.state = "";
-		        			states.add(state);
+		        			if (StringUtils.isNotBlank(rule.alexa.propertyName)) {
+			        			state.interFace = rule.alexa.interFace;
+			        			state.instance = rule.alexa.instance;
+			        			state.propertyName = rule.alexa.propertyName;
+			        			state.state = "";
+			        			states.add(state);
+		        			}
 		        			
 		        			log.trace("    rule added.");
 		        		}

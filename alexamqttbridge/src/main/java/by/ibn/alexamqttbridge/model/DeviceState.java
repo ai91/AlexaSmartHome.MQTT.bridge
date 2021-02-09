@@ -6,9 +6,9 @@ public class DeviceState {
 
 	public String interFace;
 	
-	public String propertyName;
-	
 	public String instance;
+	
+	public String propertyName;
 	
 	public String state;
 	

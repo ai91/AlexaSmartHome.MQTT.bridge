@@ -2,6 +2,7 @@ package by.ibn.alexamqttbridge.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,12 +30,11 @@ class ReadDevicesConfigTest {
 		assertEquals("Smart Device Switch", devicesConfig.devices.get(0).dynamicProperties.get("description"));
 		assertNotNull(devicesConfig.devices.get(0).dynamicProperties.get("additionalAttributes"));
 		assertNotNull(devicesConfig.devices.get(0).rules);
-		assertEquals(1, devicesConfig.devices.get(0).rules.size());
+		assertEquals(3, devicesConfig.devices.get(0).rules.size());
 		assertNotNull(devicesConfig.devices.get(0).rules.get(0).alexa);
 		assertEquals("Alexa.PowerController", devicesConfig.devices.get(0).rules.get(0).alexa.interFace);
 		assertEquals("powerState", devicesConfig.devices.get(0).rules.get(0).alexa.propertyName);
 		assertNotNull(devicesConfig.devices.get(0).rules.get(0).mqtt);
-		assertEquals("house/outlet/bedroom/command", devicesConfig.devices.get(0).rules.get(0).mqtt.commands);
 		assertEquals("house/outlet/bedroom/state", devicesConfig.devices.get(0).rules.get(0).mqtt.state);
 		assertNotNull(devicesConfig.devices.get(0).rules.get(0).valueMapsToAlexa);
 		assertEquals(2, devicesConfig.devices.get(0).rules.get(0).valueMapsToAlexa.size());
@@ -42,12 +42,7 @@ class ReadDevicesConfigTest {
 		assertEquals("1", ((ValueMapValue)devicesConfig.devices.get(0).rules.get(0).valueMapsToAlexa.get(0)).from);
 		assertEquals("OFF", ((ValueMapValue)devicesConfig.devices.get(0).rules.get(0).valueMapsToAlexa.get(1)).to);
 		assertEquals("0", ((ValueMapValue)devicesConfig.devices.get(0).rules.get(0).valueMapsToAlexa.get(1)).from);
-		assertNotNull(devicesConfig.devices.get(0).rules.get(0).valueMapsToMqtt);
-		assertEquals(2, devicesConfig.devices.get(0).rules.get(0).valueMapsToMqtt.size());
-		assertEquals("TurnOn", ((ValueMapValue)devicesConfig.devices.get(0).rules.get(0).valueMapsToMqtt.get(0)).from);
-		assertEquals("1", ((ValueMapValue)devicesConfig.devices.get(0).rules.get(0).valueMapsToMqtt.get(0)).to);
-		assertEquals("TurnOff", ((ValueMapValue)devicesConfig.devices.get(0).rules.get(0).valueMapsToMqtt.get(1)).from);
-		assertEquals("0", ((ValueMapValue)devicesConfig.devices.get(0).rules.get(0).valueMapsToMqtt.get(1)).to);
+		assertNull(devicesConfig.devices.get(0).rules.get(0).valueMapsToMqtt);
 	}
 
 }

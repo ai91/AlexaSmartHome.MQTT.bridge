@@ -30,17 +30,36 @@ public class EventProcessorCommand extends EventProcessor {
 	private MQTTService mqttService;
 
 	public EventProcessorCommand() {
-		super(
-				new String[]{"Alexa.PowerController", "Alexa.RangeController", "Alexa.ToggleController", "Alexa.ModeController",
-						"Alexa.BrightnessController", "Alexa.ColorController", "Alexa.ColorTemperatureController",
-						"Alexa.PercentageController", "Alexa.PowerLevelController", "Alexa.SceneController", "Alexa.ThermostatController",
-						"Alexa.TimeHoldController"}, 
-				new String[]{"TurnOn", "TurnOff", "SetRangeValue", "AdjustRangeValue", "SetMode", "AdjustMode",
-						"SetBrightness", "AdjustBrightness", "SetColor", "SetColorTemperature", "IncreaseColorTemperature",
-						"DecreaseColorTemperature", "SetPercentage", "AdjustPercentage", "SetPowerLevel", "AdjustPowerLevel",
-						"Activate", "Deactivate", "SetTargetTemperature", "AdjustTargetTemperature", "SetThermostatMode",
-						"ResumeSchedule", "Hold", "Resume"}
-		);
+		super(new String[0], new String[0]);
+	}
+	
+	@Override
+	public boolean isProcessable(Request request) {
+		
+		if (request != null && 
+				request.directive != null && 
+				request.directive.header != null &&
+				StringUtils.equals(request.directive.header.payloadVersion, "3")) {
+			
+			String namespace = request.directive.header.namespace;
+			String directiveName = request.directive.header.name;
+			String instance = request.directive.header.instance;
+			
+			for (Device device: devicesRepository.getDevices()) {
+				for (DeviceBridgingRule rule: device.rules) {
+					if (StringUtils.equals(namespace, rule.alexa.interFace) &&
+							StringUtils.equals(directiveName, rule.alexa.directiveName) &&
+							StringUtils.equals(instance, rule.alexa.instance)) {
+						
+						return true;
+						
+					}
+				}
+			}
+
+			
+		}
+		return false;
 	}
 	
 	@Override
@@ -56,20 +75,37 @@ public class EventProcessorCommand extends EventProcessor {
 			if (deviceOpt.isPresent()) {
 				Device device = deviceOpt.get();
 
-				String alexaValue = request.directive.header.name;
+				String namespace = request.directive.header.namespace;
+				String directiveName = request.directive.header.name;
+				String instance = request.directive.header.instance;
+				
 				String mqttValue = null;
 				
 				// send to all applicable rules
 				for (DeviceBridgingRule rule: device.rules) {
 					
-					if (rule.valueMapsToMqtt != null && StringUtils.isNotBlank(rule.mqtt.commands)) {
-						for (ValueMap valueMap: rule.valueMapsToMqtt) {
-							if (valueMap.isApplicable(alexaValue)) {
-								mqttValue = valueMap.map(alexaValue);
-								mqttService.sendMessage(rule.mqtt.commands, mqttValue);
-								break;
+					if (StringUtils.equals(namespace, rule.alexa.interFace) &&
+							StringUtils.equals(directiveName, rule.alexa.directiveName) &&
+							StringUtils.equals(instance, rule.alexa.instance)) {
+						
+						String alexaValue = "";
+						if (!StringUtils.isBlank(rule.alexa.payloadValue) && request.directive.payload != null && request.directive.payload.dynamicProperties != null) {
+							Object payloadValue = request.directive.payload.dynamicProperties.get(rule.alexa.payloadValue);
+							if (payloadValue != null) {
+								alexaValue = payloadValue.toString();
 							}
 						}
+					
+						if (rule.valueMapsToMqtt != null && StringUtils.isNotBlank(rule.mqtt.commands)) {
+							for (ValueMap valueMap: rule.valueMapsToMqtt) {
+								if (valueMap.isApplicable(alexaValue)) {
+									mqttValue = valueMap.map(alexaValue);
+									mqttService.sendMessage(rule.mqtt.commands, mqttValue);
+									break;
+								}
+							}
+						}
+						
 					}
 					
 				}
@@ -81,13 +117,18 @@ public class EventProcessorCommand extends EventProcessor {
 				
 				for (DeviceState deviceState: device.states) {
 					ContextProperty property = new ContextProperty();
+					response.context.properties.add(property);
 					property.namespace = deviceState.interFace;
 					property.name = deviceState.propertyName;
 					property.instance = deviceState.instance;
 					// convert the value back (the last known device state, converted via first matching rule)
-					alexaValue = deviceState.state;
+					String alexaValue = deviceState.state;
 					for (DeviceBridgingRule rule: device.rules) {
-						if (rule.valueMapsToAlexa != null) {
+						if (StringUtils.equals(deviceState.interFace, rule.alexa.interFace) &&
+								StringUtils.equals(deviceState.instance, rule.alexa.instance) && 
+								StringUtils.equals(deviceState.propertyName, rule.alexa.propertyName) &&
+								rule.valueMapsToAlexa != null) {
+							
 							boolean matched = false;
 							for (ValueMap valueMap: rule.valueMapsToAlexa) {
 								if (valueMap.isApplicable(deviceState.state)) {
