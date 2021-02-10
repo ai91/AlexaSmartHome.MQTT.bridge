@@ -10,7 +10,7 @@ The basic structure is following: there is a `devices` node on the root level, w
 ![Structure](../README/devices_json_structure.png)
 
 ### 1. Structure for Alexa.Discovery response
-This part is exact structure what needs to be provided as a [Discovery Response](https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-discovery.html).
+This part has exact structure what needs to be provided as a [Discovery Response](https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-discovery.html).
 
 **Note:** The structure of this part can be really huge, depends on `additionalAttributes` and `capabilities` on device. 
 
@@ -25,26 +25,27 @@ Controller APIs (like [PowerController](https://developer.amazon.com/en-US/docs/
 Each `rule` object may contain following nodes:
 - `alexa` - are properties for communication with Alexa API's
 - `mqtt` - are properties for communication with MQTT topics
-- `valueMapsToAlexa` - mapping rules, when it's necessary to convert value received from MQTT topic, before provide to Alexa on ReportState
-- `valueMapsToMqtt` - mapping rules, when it's necessary to convert value received from Alexa before publish on MQTT
+- `valueMapsToAlexa` - mapping rules, when it's necessary to convert a value received from MQTT topic, before provide to Alexa within ReportState
+- `valueMapsToMqtt` - mapping rules, when it's necessary to convert a value received from Alexa before publish to MQTT
 
 #### rule.alexa
 This node may contain following nodes:
 - `alexa.interface` - is an Alexa controller interface, a.k.a. `namespace` in requests and `ReportState` responses. For possible values see appropriate controllers in official Alexa documentation.
-- `alexa.instance` - same as above - used as an optional parameter for identification in requests/responses
+- `alexa.instance` - same as above, but used as an optional parameter for identification in requests and responses.
 - `alexa.propertyName` - name of property how it should be provided in the `ReportState` responses.
-- `alexa.directiveName` - name of directive, received from Alexa. Each interface has allowed set of directives. Like `Alexa.PowerController` may have `TurnOn` and `TurnOff`. The `Alexa.RangeController` may have `SetRangeValue` and `AdjustRangeValue`, etc. Used in control-rules, when Alexa sends some command to be performed.
-- `alexa.payloadValue` - name of property in the payload received command. The property which contains directive-parameter. Optional. For example `Alexa.PowerController.TurnOn` doesn't have any parameters, while `Alexa.RangeController.SetRangeValue` requires a value-parameter. 
+- `alexa.directiveName` - name of directive received from Alexa. Each interface has allowed set of directives. For example `Alexa.PowerController` may have `TurnOn` and `TurnOff`. The `Alexa.RangeController` may have `SetRangeValue` and `AdjustRangeValue`, etc. Used in control-rules, when Alexa sends some command to be performed.
+- `alexa.payloadValue` - name of property in a payload of received command. The referenced property contains directive-parameter. May skipped for directives without pramters. For example `Alexa.PowerController.TurnOn` doesn't have any parameters, while `Alexa.RangeController.SetRangeValue` requires a value-parameter. 
 
 #### rule.mqtt
 This node may contain following nodes:
-- `mqtt.state` - topic name with values received from Home Automation System. Used as a source for `ReportState` responses.
-- `mqtt.commands` - topic name for commands to be sent to Home Automation System. Used as target for directives received from Alexa
+- `mqtt.state` - topic name with values received from Home Automation System. Used as a value-source for `ReportState` responses.
+- `mqtt.commands` - topic name for commands to be sent to Home Automation System. Used as target-topic for directives received from Alexa.
 
 #### rule.valueMapsToAlex and rule.valueMapsToMqtt
-They are array for mappings for values between MQTT topics to Alexa and back.
+They are arrays with value-mappings for converting values from MQTT topics to Alexa and back.
 
-Each mapping node has structure predefined by `type`.
+Each mapping node has a structure predefined by it's `type`.
+
 Following types are supported:
 
 <table>
@@ -111,10 +112,10 @@ Following types are supported:
 ```
 
 </td>
-<td>Performs calculation according to formula with `value` parameter. Supported expressions can be found on [exp4j page](https://www.objecthunter.net/exp4j/)</td></tr>
+<td>Performs calculation according to formula with `value` parameter. Supported expressions can be found at https://www.objecthunter.net/exp4j/ </td></tr>
 </table>
 
-When rule has multiple mappings, they are attempted to be applied in order from first to last. If some mapping can't be applied (for example `value` mapping doesn't match `from` field), then this mapping is skipped, and verified next one. Iteration stopped after first successful conversion.    
+When rule contains multiple mappings, they are attempted to be applied in order from first to last. If some mapping can't be applied (for example `value` mapping doesn't match `from` field), then this mapping is skipped, and verified next one. Iteration stopped after first successful conversion.    
 
 # Troubleshooting
 Potential misconfigurations may cause either stop of the whole application, or some devices or rules may be ignored.
