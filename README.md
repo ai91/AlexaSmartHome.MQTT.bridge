@@ -14,7 +14,7 @@ To enable integration of Alexa into your IoT MQTT, you need to setup following c
 - Install/configure **MQTT Broker**
 - Install or use some third-party **JWT Auth Server** 
 - Install **Alexa.MQTT.Bridge** *(this project)*
-- Create/setup own **Alexa Smart Home Skill** and install in in DEV mode into your Alexa account
+- Create/setup own **Alexa Smart Home Skill** and add it in DEV mode into your Alexa account
 - Create/setup own **AWS Lambda**, and configure it to interact with your instance of the Alexa.MQTT.Bridge and your Alexa Smart Skill. *(function source code is provided here)*
 
 ## MQTT Broker and security
@@ -58,7 +58,7 @@ services:
 The sample `config` directory content can be found [here](config).
 
 ### Fat JAR
-The application can also be started as a "Spring Boot fat JAR". Downloadable from ["releases"](/releases). You need to prepare a JRE 11, and execute following command:
+The application can also be started as a "Spring Boot fat JAR". Downloadable from [releases](https://github.com/ai91/AlexaSmartHome.MQTT.bridge/releases). You need to prepare a JRE 11, and execute following command:
 
 ```java -jar alexamqttbridge.jar```
 
@@ -69,7 +69,7 @@ Same [config](config) should be placed in the directory with jar.
 The basic configuration is provided in the [config/application.properties](config/application.properties). 
 
 Properties in the file are mandatory, though the file itself is optional: configuration can also be provided as a YAML file, command-line arguments, or as environment variables. 
-Details and other options are described in the [Spring Boot Documentation](https://docs.spring.io/spring-boot/docs/2.4.2/reference/html/spring-boot-features.html#boot-features-external-config).
+Details and other options are described in the [Spring Boot documentation](https://docs.spring.io/spring-boot/docs/2.4.2/reference/html/spring-boot-features.html#boot-features-external-config).
 
 For example, for troubleshooting, one can lower logging levels with environment variable `LOGGING_LEVEL_ROOT=trace`. 
 
@@ -88,6 +88,7 @@ The **AWS Lambda** function is a proxy between Alexa Smart Home Skill, and Alexa
 The Lambda function gets triggered by Alexa, gets JWT token from parameters, and passes request as-is to the Alexa.MQTT.Bridge REST API. Then returns back a response from the API. Simple as it is.
 
 Detailed information on setup can be found on [official documentation](https://developer.amazon.com/en-US/docs/alexa/smarthome/steps-to-build-a-smart-home-skill.html).
+
 The proxy-function is provided here: [lambda/lambda_function.py](lambda/lambda_function.py) (written in Python 3). 
 
 **Note:** don't forget to modify `url = 'https://example.com/alexamqttbridge/api/events'` with your instance of Alexa.MQTT.Bridge. 

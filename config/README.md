@@ -49,8 +49,6 @@ Following types are supported:
 
 | Type   | Structure | Description |
 | ------ | -------   | ----------- |
-| Type   | Structure | Description |
-
 | `static` | `{ "type": "static", "value": "1" }` | Provides a predefined value. For example `Alexa.PowerController.TurnOn` directive doesn't provide any value for conversion, therefore it makes sense to register a `static` mapper here. |
 | `value` | `{ "type": "value", "from": "1", "to": "ON" }` | Makes a simple conversion when input value matches to `from` field. |
 | `linearRange` | `{ "type": "linearRange", "fromMin": 12, "fromMax": 0, "toMin": 0, "toMax": 100, "rounded": true }` | Converts integer/float ranges. |
@@ -60,9 +58,9 @@ Following types are supported:
 When rule has multiple mappings, they are attempted to be applied in order from first to last. If some mapping can't be applied (for example `value` mapping doesn't match `from` field), then this mapping is skipped, and verified next one. Iteration stopped after first successful conversion.    
 
 # Troubleshooting
-Potential misconfigurations may cause either stop of the whole application, or some devices/rules may be ignored.
+Potential misconfigurations may cause either stop of the whole application, or some devices or rules may be ignored.
 
-It's recommended to review application logs after initial setup to locate potential issues: there one can find if any device or rule was skipped:
+It's recommended to review application logs after initial setup to locate potential issues: 
 
 ```
 docker logs alexa_mqtt_bridge
