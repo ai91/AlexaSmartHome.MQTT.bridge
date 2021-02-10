@@ -49,27 +49,32 @@ Following types are supported:
 
 <table>
 <tr><th>Type</th><th>Structure</th><th>Description</th></tr>
-<tr><td>`static`</td><td>
+<tr><td><pre>static</pre></td><td>
+
 ```json
 { 
   "type": "static", 
   "value": "1" 
 }
 ```
+
 </td>
 <td>Provides a predefined value. For example `Alexa.PowerController.TurnOn` directive doesn't provide any value for conversion, therefore it makes sense to register a `static` mapper here. </td></tr>
 
-<tr><td>`value`</td><td>
+<tr><td><pre>value</pre></td><td>
+
 ```json
 { 
   "type": "value", 
   "from": "1", "to": "ON" 
  }
  ```
+
 </td>
 <td>Makes a simple conversion when input value matches to `from` field. </td></tr>
 
-<tr><td>`linearRange`</td><td>
+<tr><td><pre>linearRange</pre></td><td>
+
 ```json
 { 
   "type": "linearRange", 
@@ -78,21 +83,25 @@ Following types are supported:
   "rounded": true 
 }
 ```
+
 </td>
 <td>Converts integer and float ranges.</td></tr>
 
 
-<tr><td>`regex`</td><td>
+<tr><td><pre>regex</pre></td><td>
+
 ```json
 { 
   "type": "regex", 
-  "search": "^cmd([0-4]+)$",  "replace": "mva$1" 
+  "search": "^cmd([0-4]+)$", "replace": "mva$1" 
 }
 ```
+
 </td>
 <td>Regular expressions.</td></tr>
 
-<tr><td>`formula`</td><td>
+<tr><td><pre>formula</pre></td><td>
+
 ```json
 { 
   "type": "formula", 
@@ -100,6 +109,7 @@ Following types are supported:
   "rounded": true 
 }
 ```
+
 </td>
 <td>Performs calculation according to formula with `value` parameter. Supported expressions can be found on [exp4j page](https://www.objecthunter.net/exp4j/)</td></tr>
 </table>
