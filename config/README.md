@@ -49,7 +49,9 @@ Following types are supported:
 
 | Type   | Structure | Description |
 | ------ | -------   | ----------- |
-| `static` | `{ "type": "static", "value": "1" }` | Provides a predefined value. For example `Alexa.PowerController.TurnOn` directive doesn't provide any value for conversion, therefore it makes sense to register a `static` mapper here. |
+| `static` | ```javascript
+{ "type": "static", "value": "1" }
+``` | Provides a predefined value. For example `Alexa.PowerController.TurnOn` directive doesn't provide any value for conversion, therefore it makes sense to register a `static` mapper here. |
 | `value` | `{ "type": "value", "from": "1", "to": "ON" }` | Makes a simple conversion when input value matches to `from` field. |
 | `linearRange` | `{ "type": "linearRange", "fromMin": 12, "fromMax": 0, "toMin": 0, "toMax": 100, "rounded": true }` | Converts integer/float ranges. |
 | `regex` | `{ "type": "regex", "search": "^cmd([0-4]+)$",  "replace": "mva$1" }` | Regular expressions. |
