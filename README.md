@@ -55,15 +55,20 @@ The sample `config` directory content can be found [here](config).
 
 ### Fat JAR
 The application can also be started as a ["fat JAR"](releases). You need to prepare a JRE 11, and execute following command:
-`java -jar alexamqttbridge.jar`
+```java -jar alexamqttbridge.jar```
 Same [config](config) should be placed in the directory with jar.
 
 ### Configuration
 #### Basic application properties
 The basic configuration is provided in the [config/application.properties](config/application.properties). 
-Properties in the file are mandatory, though the file itself is optional. Configuration can also be provided as a YAML file, command-line arguments, or as environment variables. 
-Details and other options are described in the [Spring Boot Documentation](https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-external-config.html).
-For example for troubleshooting, one can lower logging levels with environment variable `LOGGING_LEVEL_ROOT=trace`
+
+Properties in the file are mandatory, though the file itself is optional: configuration can also be provided as a YAML file, command-line arguments, or as environment variables. 
+Details and other options are described in the [Spring Boot Documentation](https://docs.spring.io/spring-boot/docs/2.4.2/reference/html/spring-boot-features.html#boot-features-external-config).
+
+For example, for troubleshooting, one can lower logging levels with environment variable `LOGGING_LEVEL_ROOT=trace`. 
+
+By default, logging is performed to console. Optionally it's possible to configure logging to external file(s). This can be achieved by modifying `application.properties` according to [following documentation](https://docs.spring.io/spring-boot/docs/2.4.2/reference/html/spring-boot-features.html#boot-features-logging-file-output). 
+
 #### Alexa Skill devices and rules: devices.json
 The basic configuration is responsible for communication and application itself. 
 
