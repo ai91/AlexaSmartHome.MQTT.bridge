@@ -47,13 +47,62 @@ They are array for mappings for values between MQTT topics to Alexa and back.
 Each mapping node has structure predefined by `type`.
 Following types are supported:
 
-| Type   | Structure | Description |
-| ------ | -------   | ----------- |
-| `static` | `{ "type": "static", "value": "1" }` | Provides a predefined value. For example `Alexa.PowerController.TurnOn` directive doesn't provide any value for conversion, therefore it makes sense to register a `static` mapper here. |
-| `value` | `{ "type": "value", "from": "1", "to": "ON" }` | Makes a simple conversion when input value matches to `from` field. |
-| `linearRange` | `{ "type": "linearRange", "fromMin": 12, "fromMax": 0, "toMin": 0, "toMax": 100, "rounded": true }` | Converts integer/float ranges. |
-| `regex` | `{ "type": "regex", "search": "^cmd([0-4]+)$",  "replace": "mva$1" }` | Regular expressions. |
-| `formula` | `{ "type": "formula", "formula": "(value-32)*5/9", "rounded": true }` | Performs calculation according to formula with `value` parameter. Supported expressions can be found on [exp4j page](https://www.objecthunter.net/exp4j/) |
+<table>
+<tr><th>Type</th><th>Structure</th><th>Description</th></tr>
+<tr><td>`static`</td><td>
+```json
+{ 
+  "type": "static", 
+  "value": "1" 
+}
+```
+</td>
+<td>Provides a predefined value. For example `Alexa.PowerController.TurnOn` directive doesn't provide any value for conversion, therefore it makes sense to register a `static` mapper here. </td></tr>
+
+<tr><td>`value`</td><td>
+```json
+{ 
+  "type": "value", 
+  "from": "1", "to": "ON" 
+ }
+ ```
+</td>
+<td>Makes a simple conversion when input value matches to `from` field. </td></tr>
+
+<tr><td>`linearRange`</td><td>
+```json
+{ 
+  "type": "linearRange", 
+  "fromMin": 12, "fromMax": 0, 
+  "toMin": 0, "toMax": 100, 
+  "rounded": true 
+}
+```
+</td>
+<td>Converts integer and float ranges.</td></tr>
+
+
+<tr><td>`regex`</td><td>
+```json
+{ 
+  "type": "regex", 
+  "search": "^cmd([0-4]+)$",  "replace": "mva$1" 
+}
+```
+</td>
+<td>Regular expressions.</td></tr>
+
+<tr><td>`formula`</td><td>
+```json
+{ 
+  "type": "formula", 
+  "formula": "(value-32)*5/9", 
+  "rounded": true 
+}
+```
+</td>
+<td>Performs calculation according to formula with `value` parameter. Supported expressions can be found on [exp4j page](https://www.objecthunter.net/exp4j/)</td></tr>
+</table>
 
 When rule has multiple mappings, they are attempted to be applied in order from first to last. If some mapping can't be applied (for example `value` mapping doesn't match `from` field), then this mapping is skipped, and verified next one. Iteration stopped after first successful conversion.    
 
