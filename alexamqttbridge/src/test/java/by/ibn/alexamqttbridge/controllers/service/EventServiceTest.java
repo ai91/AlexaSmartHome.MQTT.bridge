@@ -18,6 +18,8 @@ import by.ibn.alexamqttbridge.resources.Context;
 import by.ibn.alexamqttbridge.resources.ContextProperty;
 import by.ibn.alexamqttbridge.resources.Request;
 import by.ibn.alexamqttbridge.resources.Response;
+import by.ibn.alexamqttbridge.service.EventProcessorDiscovery;
+import by.ibn.alexamqttbridge.service.EventService;
 
 @SpringBootTest
 @ActiveProfiles("test")

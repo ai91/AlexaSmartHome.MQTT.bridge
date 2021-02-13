@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import by.ibn.alexamqttbridge.controllers.service.EventService;
 import by.ibn.alexamqttbridge.resources.Request;
 import by.ibn.alexamqttbridge.resources.Response;
+import by.ibn.alexamqttbridge.service.EventService;
 
 /**
  * Entry point for events from AWS Lambda

@@ -21,11 +21,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import by.ibn.alexamqttbridge.MQTTConfiguration;
-import by.ibn.alexamqttbridge.controllers.service.EventService;
 import by.ibn.alexamqttbridge.resources.Event;
 import by.ibn.alexamqttbridge.resources.Header;
 import by.ibn.alexamqttbridge.resources.Request;
 import by.ibn.alexamqttbridge.resources.Response;
+import by.ibn.alexamqttbridge.service.EventService;
 
 @SpringBootTest
 @AutoConfigureMockMvc

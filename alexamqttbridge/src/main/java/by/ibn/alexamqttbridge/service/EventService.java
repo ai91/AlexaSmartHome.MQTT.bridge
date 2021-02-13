@@ -1,4 +1,4 @@
-package by.ibn.alexamqttbridge.controllers.service;
+package by.ibn.alexamqttbridge.service;
 
 import java.util.List;
 

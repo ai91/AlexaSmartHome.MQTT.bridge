@@ -19,6 +19,7 @@ import org.springframework.test.context.TestPropertySource;
 import by.ibn.alexamqttbridge.MQTTConfiguration;
 import by.ibn.alexamqttbridge.model.Device;
 import by.ibn.alexamqttbridge.resources.Endpoint;
+import by.ibn.alexamqttbridge.service.DeviceRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")

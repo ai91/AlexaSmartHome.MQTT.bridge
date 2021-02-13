@@ -5,8 +5,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import by.ibn.alexamqttbridge.controllers.service.DeviceRepository;
-import by.ibn.alexamqttbridge.controllers.service.MQTTService;
+import by.ibn.alexamqttbridge.service.DeviceRepository;
+import by.ibn.alexamqttbridge.service.MQTTService;
 
 @Component
 public class ApplicationStartup implements ApplicationListener<ApplicationReadyEvent> {

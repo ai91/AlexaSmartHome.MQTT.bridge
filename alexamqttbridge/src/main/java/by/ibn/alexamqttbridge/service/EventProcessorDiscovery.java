@@ -1,4 +1,4 @@
-package by.ibn.alexamqttbridge.controllers.service;
+package by.ibn.alexamqttbridge.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

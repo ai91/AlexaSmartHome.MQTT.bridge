@@ -1,4 +1,4 @@
-package by.ibn.alexamqttbridge.controllers.service;
+package by.ibn.alexamqttbridge.service;
 
 import org.apache.commons.lang3.StringUtils;
 

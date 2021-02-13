@@ -22,6 +22,8 @@ import by.ibn.alexamqttbridge.resources.Endpoint;
 import by.ibn.alexamqttbridge.resources.Header;
 import by.ibn.alexamqttbridge.resources.Request;
 import by.ibn.alexamqttbridge.resources.Response;
+import by.ibn.alexamqttbridge.service.DeviceRepository;
+import by.ibn.alexamqttbridge.service.EventProcessorDiscovery;
 
 @SpringBootTest
 @ActiveProfiles("test")
