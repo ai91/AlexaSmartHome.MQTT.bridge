@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -88,7 +89,7 @@ public class DeviceRepository {
 		
 		Resource configResource = resourceLoader.getResource(configResourceLocation);
 		
-		try (Reader reader = new InputStreamReader(configResource.getInputStream())) {
+		try (Reader reader = new InputStreamReader(configResource.getInputStream(), StandardCharsets.UTF_8)) {
 		    String payloadStr = FileCopyUtils.copyToString(reader);
 		    DevicesConfig config = new ObjectMapper().readerFor(DevicesConfig.class).readValue(payloadStr);
 		    
