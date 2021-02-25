@@ -1,0 +1,39 @@
+name: Master tag
+
+on:
+  push:
+    tags: ['*']
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    env: 
+      LATEST_TAG: ai91/alexamqttbridge:latest
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    defaults:
+      run:
+        working-directory: ./alexamqttbridge
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - run: echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    - run: echo "VERSION_TAG=ai91/alexamqttbridge:$VERSION" >> $GITHUB_ENV
+    - run: chmod +x ./gradlew
+    - run: ./gradlew build -DVERSION=$VERSION
+    - name: Upload assets to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: alexamqttbridge/build/libs/alexamqttbridge-${{ env.VERSION }}.jar
+        asset_name: alexamqttbridge-${{ env.VERSION }}.jar
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "# Docker image:\n`docker pull ${{ env.VERSION_TAG }}`\n# Fat-JAR\n Find `alexamqttbridge-${{ env.VERSION }}.jar` in assets."
+    - run: ./gradlew bootBuildImage -DVERSION=$VERSION --imageName=$LATEST_TAG
+    - run: ./gradlew bootBuildImage -DVERSION=$VERSION --imageName=$VERSION_TAG
+    - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - run: docker push $LATEST_TAG
+    - run: docker push $VERSION_TAG
