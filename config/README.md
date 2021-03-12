@@ -60,7 +60,7 @@ Following types are supported:
 ```
 
 </td>
-<td>Provides a predefined value. For example `Alexa.PowerController.TurnOn` directive doesn't provide any value for conversion, therefore it makes sense to register a `static` mapper here. </td></tr>
+<td>Provides a predefined value. For example <code>Alexa.PowerController.TurnOn</code> directive doesn't provide any value for conversion, therefore it makes sense to register a <code>static</code> mapper here. </td></tr>
 
 <tr><td><pre>value</pre></td><td>
 
@@ -72,7 +72,7 @@ Following types are supported:
  ```
 
 </td>
-<td>Makes a simple conversion when input value matches to `from` field. </td></tr>
+<td>Makes a simple conversion when input value matches to <code>from</code> field. </td></tr>
 
 <tr><td><pre>linearRange</pre></td><td>
 
@@ -112,7 +112,7 @@ Following types are supported:
 ```
 
 </td>
-<td>Performs calculation according to formula with `value` parameter. Supported expressions can be found at https://www.objecthunter.net/exp4j/ </td></tr>
+<td>Performs calculation according to formula with <code>value</code> parameter. Supported expressions can be found at https://www.objecthunter.net/exp4j/ </td></tr>
 </table>
 
 When rule contains multiple mappings, they are attempted to be applied in order from first to last. If some mapping can't be applied (for example `value` mapping doesn't match `from` field), then this mapping is skipped, and verified next one. Iteration stopped after first successful conversion.    
