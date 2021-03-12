@@ -34,7 +34,8 @@ Of course it's up to you how you configure the infrastructure: one can use Dynam
 ## Configuration and Alexa.MQTT.Bridge startup
 The project is shipped either as a docker image, or as a Spring Boot "fat JAR". Alternatively, of course, it's possible to build and start from sources.
 
-The REST API is served over default Spring Boot port 8080, though can be configured via configuration file, or environment variable.
+The REST API is served over default Spring Boot port 8080, though can be configured via configuration file, environment variable, or command line. For example see a sample configuration file.
+
 ### Docker image
 The image: [ai91/alexamqttbridge](https://hub.docker.com/r/ai91/alexamqttbridge) is on hub.docker.
 
