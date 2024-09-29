@@ -1,4 +1,4 @@
-package by.ibn.alexamqttbridge.controllers.service;
+package by.ibn.alexamqttbridge.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,7 +19,6 @@ import org.springframework.test.context.TestPropertySource;
 import by.ibn.alexamqttbridge.MQTTConfiguration;
 import by.ibn.alexamqttbridge.model.Device;
 import by.ibn.alexamqttbridge.resources.Endpoint;
-import by.ibn.alexamqttbridge.service.DeviceRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")

@@ -3,11 +3,15 @@ package by.ibn.alexamqttbridge.service;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.ibn.alexamqttbridge.model.Device;
 import by.ibn.alexamqttbridge.model.DeviceBridgingRule;
@@ -76,8 +80,7 @@ public class EventProcessorReportState extends EventProcessor {
 							}
 						}
 					}
-					property.value = alexaValue;
-					
+					property.value = castValue(alexaValue);
 					
 					if (deviceState.lastUpdate != null) {
 						property.timeOfSample = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(deviceState.lastUpdate);
@@ -97,6 +100,20 @@ public class EventProcessorReportState extends EventProcessor {
 		
 
 		return response;
+	}
+	
+	Object castValue(String value)
+	{
+		try {
+			TypeReference<HashMap<String,Object>> typeRef = new TypeReference<HashMap<String,Object>>() {};
+			HashMap<String,Object> jsonMap = new ObjectMapper().readValue(value, typeRef);
+			if (jsonMap != null) {
+				return jsonMap;
+			}
+		} catch (Exception e) {}
+		
+		return value;
+		
 	}
 	
 }

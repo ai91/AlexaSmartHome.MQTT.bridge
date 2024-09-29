@@ -117,6 +117,29 @@ Following types are supported:
 
 When rule contains multiple mappings, they are attempted to be applied in order from first to last. If some mapping can't be applied (for example `value` mapping doesn't match `from` field), then this mapping is skipped, and verified next one. Iteration stopped after first successful conversion.    
 
+When result of `valueMapsToAlexa` is a string-representation of JSON object, the result of `value` is sent as a JSON node. Example:
+```json
+...
+"valueMapsToAlexa": [
+	{ "type": "regex", "search": "^online$", "replace": "\"value\":\"OK\"" },
+	{ "type": "regex", "search": "^offline$", "replace": "\"value\":\"UNREACHABLE\"" }
+]
+...
+```
+Produces following structure:
+```json
+...
+{
+    "namespace": "Alexa.EndpointHealth",
+    "name": "connectivity",
+    "value": {
+        "value": "UNREACHABLE"
+    },
+    "timeOfSample": "2017-02-03T08:00:00.10Z",
+}
+...
+```
+
 # Troubleshooting
 Potential misconfigurations may cause either stop of the whole application, or some devices or rules may be ignored.
 

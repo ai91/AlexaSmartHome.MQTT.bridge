@@ -2,14 +2,14 @@ package by.ibn.alexamqttbridge;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import by.ibn.alexamqttbridge.service.DeviceRepository;
 import by.ibn.alexamqttbridge.service.MQTTService;
 
 @Component
-public class ApplicationStartup implements ApplicationListener<ApplicationReadyEvent> {
+public class ApplicationStartup {
 
 	@Autowired
 	private DeviceRepository deviceRepository;
@@ -17,8 +17,8 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	@Autowired
 	private MQTTService mqttService;
 
-	@Override
-	public void onApplicationEvent(final ApplicationReadyEvent event) {
+	@EventListener(ApplicationReadyEvent.class)
+	public void onApplicationReady() {
 
 		mqttService.subscribeOnTopics(deviceRepository);
 		
