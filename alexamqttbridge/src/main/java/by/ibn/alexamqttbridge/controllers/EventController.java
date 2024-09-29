@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import by.ibn.alexamqttbridge.resources.Request;
 import by.ibn.alexamqttbridge.resources.Response;
 import by.ibn.alexamqttbridge.service.EventService;
@@ -39,12 +41,15 @@ public class EventController {
 		try {
 
 			log.trace("Processing request");
+			log.trace(" Request: {}", new ObjectMapper().writeValueAsString(request));
 
 			Response response = service.processEvent(request);
 			if (response == null) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 
+			log.trace(" Response: {}", new ObjectMapper().writeValueAsString(response));
+			
 			return new ResponseEntity<Response>(response, HttpStatus.OK);
 		} catch (Exception e) {
 
