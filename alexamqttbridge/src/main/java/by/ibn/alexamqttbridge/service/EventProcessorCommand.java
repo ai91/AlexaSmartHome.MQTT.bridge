@@ -3,6 +3,7 @@ package by.ibn.alexamqttbridge.service;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.ibn.alexamqttbridge.model.Device;
 import by.ibn.alexamqttbridge.model.DeviceBridgingRule;
@@ -96,8 +100,14 @@ public class EventProcessorCommand extends EventProcessor {
 						if (!StringUtils.isBlank(rule.alexa.payloadValue) && request.directive.payload != null && request.directive.payload.dynamicProperties != null) {
 							Object payloadValue = request.directive.payload.dynamicProperties.get(rule.alexa.payloadValue);
 							if (payloadValue != null) {
-log.trace("cmd payload class: {}, string value: {}", payloadValue.getClass(), payloadValue.toString());
 								alexaValue = payloadValue.toString();
+								if (payloadValue instanceof Map)
+								{
+									try {
+										alexaValue = new ObjectMapper().writeValueAsString(payloadValue);
+									} catch (JsonProcessingException e) {}
+								}
+log.trace("cmd payload class: {}, string value: {}", payloadValue.getClass(), alexaValue);
 							}
 						}
 					
