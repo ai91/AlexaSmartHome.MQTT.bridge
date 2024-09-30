@@ -142,7 +142,8 @@ public class EventProcessorCommand extends EventProcessor {
 							}
 						}
 					}
-					property.value = alexaValue;
+					property.value = castValue(alexaValue);
+					
 					if (deviceState.lastUpdate != null) {
 						property.timeOfSample = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(deviceState.lastUpdate);
 						property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastUpdate.toInstant().toEpochMilli();

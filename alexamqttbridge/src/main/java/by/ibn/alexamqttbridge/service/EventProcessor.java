@@ -1,6 +1,11 @@
 package by.ibn.alexamqttbridge.service;
 
+import java.util.HashMap;
+
 import org.apache.commons.lang3.StringUtils;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.ibn.alexamqttbridge.resources.Request;
 import by.ibn.alexamqttbridge.resources.Response;
@@ -28,5 +33,20 @@ public abstract class EventProcessor {
 	}
 	
 	public abstract Response process(Request request);
+
+	Object castValue(String value)
+	{
+		try {
+			TypeReference<HashMap<String,Object>> typeRef = new TypeReference<HashMap<String,Object>>() {};
+			HashMap<String,Object> jsonMap = new ObjectMapper().readValue(value, typeRef);
+			if (jsonMap != null) {
+				return jsonMap;
+			}
+		} catch (Exception e) {}
+		
+		return value;
+		
+	}
+
 	
 }
