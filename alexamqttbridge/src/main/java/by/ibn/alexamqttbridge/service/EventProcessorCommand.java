@@ -43,7 +43,7 @@ public class EventProcessorCommand extends EventProcessor {
 		if (request != null && 
 				request.directive != null && 
 				request.directive.header != null &&
-				StringUtils.equals(request.directive.header.payloadVersion, "3")) {
+				StringUtils.startsWith(request.directive.header.payloadVersion, "3")) {
 			
 			String namespace = request.directive.header.namespace;
 			String directiveName = request.directive.header.name;

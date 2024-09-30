@@ -29,7 +29,7 @@ public abstract class EventProcessor {
 				request.directive.header != null &&
 				StringUtils.equalsAny(request.directive.header.namespace, namespaces) &&
 				StringUtils.equalsAny(request.directive.header.name, names) &&
-				StringUtils.equals(request.directive.header.payloadVersion, payloadVersion);
+				StringUtils.startsWith(request.directive.header.payloadVersion, payloadVersion);
 	}
 	
 	public abstract Response process(Request request);
