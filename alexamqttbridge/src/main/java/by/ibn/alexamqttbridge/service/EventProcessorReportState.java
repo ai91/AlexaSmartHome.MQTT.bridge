@@ -88,6 +88,7 @@ public class EventProcessorReportState extends EventProcessor {
 				response.event = new Event();
 				response.event.header = request.directive.header;
 				response.event.header.name = "StateReport";
+				response.event.header.payloadVersion = "3";
 				response.event.payload = new PayloadResponse();;
 				response.event.endpoint = request.directive.endpoint; 
 			}

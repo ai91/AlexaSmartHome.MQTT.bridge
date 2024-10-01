@@ -46,8 +46,7 @@ public class EventProcessorCommand extends EventProcessor {
 		
 		if (request != null && 
 				request.directive != null && 
-				request.directive.header != null &&
-				StringUtils.startsWith(request.directive.header.payloadVersion, "3")) {
+				request.directive.header != null) {
 			
 			String namespace = request.directive.header.namespace;
 			String directiveName = request.directive.header.name;
@@ -107,7 +106,6 @@ public class EventProcessorCommand extends EventProcessor {
 										alexaValue = new ObjectMapper().writeValueAsString(payloadValue);
 									} catch (JsonProcessingException e) {}
 								}
-log.trace("cmd payload class: {}, string value: {}", payloadValue.getClass(), alexaValue);
 							}
 						}
 					
@@ -170,6 +168,7 @@ log.trace("cmd payload class: {}, string value: {}", payloadValue.getClass(), al
 				response.event.header = request.directive.header;
 				response.event.header.namespace = "Alexa";
 				response.event.header.name = "Response";
+				response.event.header.payloadVersion = "3";
 				response.event.payload = new PayloadResponse();;
 				
 				response.event.endpoint = request.directive.endpoint; 

@@ -14,12 +14,10 @@ public abstract class EventProcessor {
 	
 	private String[] namespaces;
 	private String[] names;
-	private String payloadVersion;
 	
 	public EventProcessor(String[] namespaces, String[] names) {
 		this.namespaces = namespaces;
 		this.names = names;
-		this.payloadVersion = "3";
 	}
 	
 	public boolean isProcessable(Request request) {
@@ -28,8 +26,7 @@ public abstract class EventProcessor {
 				request.directive != null && 
 				request.directive.header != null &&
 				StringUtils.equalsAny(request.directive.header.namespace, namespaces) &&
-				StringUtils.equalsAny(request.directive.header.name, names) &&
-				StringUtils.startsWith(request.directive.header.payloadVersion, payloadVersion);
+				StringUtils.equalsAny(request.directive.header.name, names);
 	}
 	
 	public abstract Response process(Request request);

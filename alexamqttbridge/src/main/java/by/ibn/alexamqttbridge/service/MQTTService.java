@@ -1,5 +1,6 @@
 package by.ibn.alexamqttbridge.service;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +92,7 @@ public class MQTTService {
 						
 						for(DeviceState state: subscriptions.get(topic)) {
 							state.state = value;
+							state.lastUpdate = ZonedDateTime.now();
 						}
 						
 					});
