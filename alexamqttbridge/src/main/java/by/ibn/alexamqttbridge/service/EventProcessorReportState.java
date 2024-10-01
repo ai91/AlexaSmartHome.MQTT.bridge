@@ -1,6 +1,5 @@
 package by.ibn.alexamqttbridge.service;
 
-import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -80,7 +79,8 @@ public class EventProcessorReportState extends EventProcessor {
 					
 					if (deviceState.lastUpdate != null) {
 						property.timeOfSample = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(deviceState.lastUpdate);
-						property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastUpdate.toInstant().toEpochMilli();
+//						property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastUpdate.toInstant().toEpochMilli();
+						property.uncertaintyInMilliseconds = 1000l;
 					}
 					
 				}
