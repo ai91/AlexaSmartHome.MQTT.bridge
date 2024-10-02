@@ -1,4 +1,4 @@
-package by.ibn.alexamqttbridge.controllers.service;
+package by.ibn.alexamqttbridge.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -22,8 +22,6 @@ import by.ibn.alexamqttbridge.resources.Endpoint;
 import by.ibn.alexamqttbridge.resources.Header;
 import by.ibn.alexamqttbridge.resources.Request;
 import by.ibn.alexamqttbridge.resources.Response;
-import by.ibn.alexamqttbridge.service.DeviceRepository;
-import by.ibn.alexamqttbridge.service.EventProcessorDiscovery;
 
 @SpringBootTest
 @ActiveProfiles("test")

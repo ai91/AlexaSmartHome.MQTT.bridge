@@ -4,11 +4,11 @@ import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,21 +28,16 @@ public class MQTTConfiguration {
 		
 		String serverURI = "tcp://" + hostname + ":" + port;
 		
-		log.trace("MQTT Connection:");
-		log.trace(" Server URI: {}", serverURI);
-		log.trace(" ClientId: {}", clientId);
-		log.trace(" User: {}", mqttConnectOptions.getUserName());
+		log.info("MQTT Connection:");
+		log.info(" Server URI: {}", serverURI);
+		log.info(" ClientId: {}", clientId);
+		log.info(" User: {}", mqttConnectOptions.getUserName());
 
-		IMqttClient mqttClient = new MqttClient(serverURI, clientId);
+		IMqttClient mqttClient = new MqttClient(serverURI, clientId, new MemoryPersistence());
 
 		mqttClient.connect(mqttConnectOptions);
 
 		return mqttClient;
 	}	
 
-	@Bean
-	@ConfigurationProperties(prefix = "mqtt")
-	public MqttConnectOptions mqttConnectOptions() {
-		return new MqttConnectOptions();
-	}	
 }

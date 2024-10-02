@@ -1,6 +1,5 @@
 package by.ibn.alexamqttbridge.service;
 
-import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -76,12 +75,12 @@ public class EventProcessorReportState extends EventProcessor {
 							}
 						}
 					}
-					property.value = alexaValue;
-					
+					property.value = castValue(alexaValue);
 					
 					if (deviceState.lastUpdate != null) {
 						property.timeOfSample = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(deviceState.lastUpdate);
-						property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastUpdate.toInstant().toEpochMilli();
+//						property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastUpdate.toInstant().toEpochMilli();
+						property.uncertaintyInMilliseconds = 1000l;
 					}
 					
 				}
@@ -89,6 +88,7 @@ public class EventProcessorReportState extends EventProcessor {
 				response.event = new Event();
 				response.event.header = request.directive.header;
 				response.event.header.name = "StateReport";
+				response.event.header.payloadVersion = "3";
 				response.event.payload = new PayloadResponse();;
 				response.event.endpoint = request.directive.endpoint; 
 			}

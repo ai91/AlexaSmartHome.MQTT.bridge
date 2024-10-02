@@ -1,13 +1,18 @@
 package by.ibn.alexamqttbridge.service;
 
-import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import by.ibn.alexamqttbridge.model.Device;
 import by.ibn.alexamqttbridge.model.DeviceBridgingRule;
@@ -22,6 +27,8 @@ import by.ibn.alexamqttbridge.resources.Response;
 
 @Service
 public class EventProcessorCommand extends EventProcessor {
+	
+	Logger log = LoggerFactory.getLogger(EventProcessorCommand.class);
 	
 	@Autowired
 	private DeviceRepository devicesRepository;
@@ -38,8 +45,7 @@ public class EventProcessorCommand extends EventProcessor {
 		
 		if (request != null && 
 				request.directive != null && 
-				request.directive.header != null &&
-				StringUtils.equals(request.directive.header.payloadVersion, "3")) {
+				request.directive.header != null) {
 			
 			String namespace = request.directive.header.namespace;
 			String directiveName = request.directive.header.name;
@@ -93,6 +99,12 @@ public class EventProcessorCommand extends EventProcessor {
 							Object payloadValue = request.directive.payload.dynamicProperties.get(rule.alexa.payloadValue);
 							if (payloadValue != null) {
 								alexaValue = payloadValue.toString();
+								if (payloadValue instanceof Map)
+								{
+									try {
+										alexaValue = new ObjectMapper().writeValueAsString(payloadValue);
+									} catch (JsonProcessingException e) {}
+								}
 							}
 						}
 					
@@ -142,10 +154,12 @@ public class EventProcessorCommand extends EventProcessor {
 							}
 						}
 					}
-					property.value = alexaValue;
+					property.value = castValue(alexaValue);
+					
 					if (deviceState.lastUpdate != null) {
 						property.timeOfSample = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(deviceState.lastUpdate);
-						property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastUpdate.toInstant().toEpochMilli();
+//						property.uncertaintyInMilliseconds = Instant.now().toEpochMilli() - deviceState.lastUpdate.toInstant().toEpochMilli();
+						property.uncertaintyInMilliseconds = 1000l;
 					}
 					
 				}
@@ -154,6 +168,7 @@ public class EventProcessorCommand extends EventProcessor {
 				response.event.header = request.directive.header;
 				response.event.header.namespace = "Alexa";
 				response.event.header.name = "Response";
+				response.event.header.payloadVersion = "3";
 				response.event.payload = new PayloadResponse();;
 				
 				response.event.endpoint = request.directive.endpoint; 

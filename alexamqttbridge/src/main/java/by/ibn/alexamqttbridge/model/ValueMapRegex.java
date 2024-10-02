@@ -14,12 +14,18 @@ public class ValueMapRegex extends ValueMap {
 	
 	@Override
 	public boolean isApplicable(String value) {
-		return Pattern.matches(search, value);
+		if (value != null)
+		{
+			Pattern p = Pattern.compile(search, Pattern.DOTALL);
+			return p.matcher(value.toString()).find();
+		}
+		return false;
 	}
 
 	@Override
 	public String map(String value) {
-		return value.replaceAll(search, replace);
+		Pattern p = Pattern.compile(search, Pattern.DOTALL);
+		return p.matcher(value.toString()).replaceAll(replace);
 	}
 
 	@Override
