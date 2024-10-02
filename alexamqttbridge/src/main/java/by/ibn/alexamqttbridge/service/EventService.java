@@ -24,12 +24,12 @@ public class EventService {
 		{
 			if (eventProcessor.isProcessable(request))
 			{
-				log.trace("Processor {}: processable", eventProcessor.getClass().getName());
+				log.info("Processor {}: processable", eventProcessor.getClass().getName());
 				
 				return eventProcessor.process(request);
 			}
 			
-			log.trace("Processor {}: not processable", eventProcessor.getClass().getName());
+			log.info("Processor {}: not processable", eventProcessor.getClass().getName());
 		}
 		
 		if (request != null && request.directive != null && request.directive.header != null) {

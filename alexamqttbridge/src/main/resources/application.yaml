@@ -1,5 +1,5 @@
 logging:
   level:
     root: "error"
-    by.ibn: "trace"
-    org.springframework.security: "trace"
+    by.ibn: "info"
+    org.springframework.security: "info"

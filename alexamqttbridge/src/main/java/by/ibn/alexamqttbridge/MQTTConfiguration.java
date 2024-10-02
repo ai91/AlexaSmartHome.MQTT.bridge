@@ -28,10 +28,10 @@ public class MQTTConfiguration {
 		
 		String serverURI = "tcp://" + hostname + ":" + port;
 		
-		log.trace("MQTT Connection:");
-		log.trace(" Server URI: {}", serverURI);
-		log.trace(" ClientId: {}", clientId);
-		log.trace(" User: {}", mqttConnectOptions.getUserName());
+		log.info("MQTT Connection:");
+		log.info(" Server URI: {}", serverURI);
+		log.info(" ClientId: {}", clientId);
+		log.info(" User: {}", mqttConnectOptions.getUserName());
 
 		IMqttClient mqttClient = new MqttClient(serverURI, clientId, new MemoryPersistence());
 

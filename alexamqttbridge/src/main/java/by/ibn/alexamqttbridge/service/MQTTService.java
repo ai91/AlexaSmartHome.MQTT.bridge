@@ -77,7 +77,7 @@ public class MQTTService {
 			List<DeviceState> stateListeners = subscriptions.get(topic);
 			if (stateListeners == null) {
 				
-				log.trace("Subscribing on topic {}", topic);
+				log.info("Subscribing on topic {}", topic);
 				
 				stateListeners = new ArrayList<>();
 				subscriptions.put(topic, stateListeners);
@@ -88,7 +88,7 @@ public class MQTTService {
 					
 					mqttClient.subscribeWithResponse(topic, (tpic, msg) -> {
 						String value = new String(msg.getPayload());
-						log.trace("Received message on topic {}: {}", tpic, value );
+						log.info("Received message on topic {}: {}", tpic, value );
 						
 						for(DeviceState state: subscriptions.get(topic)) {
 							state.state = value;
@@ -104,7 +104,7 @@ public class MQTTService {
 				}
 				
 			} else if (stateListeners.size() > 0) {
-				log.trace("Already subscribed on topic {}. Reusing existing subscription.", topic);
+				log.info("Already subscribed on topic {}. Reusing existing subscription.", topic);
 				
 				// clone previously received state
 				deviceState.state = stateListeners.get(0).state;

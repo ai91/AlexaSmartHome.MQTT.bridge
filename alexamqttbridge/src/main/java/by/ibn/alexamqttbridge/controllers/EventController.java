@@ -40,15 +40,19 @@ public class EventController {
 
 		try {
 
-			log.trace("Processing request");
-			log.trace(" Request: {}", new ObjectMapper().writeValueAsString(request));
+			log.info("Processing request");
+			if (log.isTraceEnabled()) {
+				log.trace(" Request: {}", new ObjectMapper().writeValueAsString(request));
+			}
 
 			Response response = service.processEvent(request);
 			if (response == null) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 
-			log.trace(" Response: {}", new ObjectMapper().writeValueAsString(response));
+			if (log.isTraceEnabled()) {
+				log.trace(" Response: {}", new ObjectMapper().writeValueAsString(response));
+			}
 			
 			return new ResponseEntity<Response>(response, HttpStatus.OK);
 		} catch (Exception e) {

@@ -99,19 +99,19 @@ public class DeviceRepository {
 		    	throw new RuntimeException("Empty devices config");
 		    }
 		    
-		    log.trace("Loaded {} devices. Validating and cleaning up...", config.devices.size());
+		    log.info("Loaded {} devices. Validating and cleaning up...", config.devices.size());
 		    
 		    List<Device> devices = new ArrayList<Device>();
 		    for (Device device: config.devices) {
 		    	// skip empty endpointId's - they probably temporary disabled
 		    	if (StringUtils.isNotBlank(device.endpointId)) {
-		    		log.trace("  device {}. Analysing...", device.endpointId);
+		    		log.info("  device {}. Analysing...", device.endpointId);
 		    		// skip invalid rules and initialize device states 
 		    		List<DeviceBridgingRule> rules = new ArrayList<>();
 		    		List<DeviceState> states = new ArrayList<>();
 		    		if (device.rules != null) {
 		    			
-		    			log.trace("  found {} rule definitions. Validating and cleaning up...", device.rules.size());
+		    			log.info("  found {} rule definitions. Validating and cleaning up...", device.rules.size());
 		    			
 		        		for (DeviceBridgingRule rule: device.rules) {
 		        			if (rule.alexa == null || StringUtils.isBlank(rule.alexa.interFace)) {
@@ -153,7 +153,7 @@ public class DeviceRepository {
 			        			states.add(state);
 		        			}
 		        			
-		        			log.trace("    rule added.");
+		        			log.info("    rule added.");
 		        		}
 		    		}
 		    		if (rules.isEmpty()) {
@@ -163,9 +163,9 @@ public class DeviceRepository {
 		    		device.rules = rules;
 		    		device.states = states;
 		    		devices.add(device);
-        			log.trace("  device added.");
+        			log.info("  device added.");
 		    	} else {
-		    		log.trace("Skipping device without endpointId");
+		    		log.info("Skipping device without endpointId");
 		    	}
 		    }
 		    
